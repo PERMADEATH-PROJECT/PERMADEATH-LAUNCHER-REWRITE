@@ -6,6 +6,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { message } from '@tauri-apps/plugin-dialog';
 import { LucideAngularModule, LogIn, User, TriangleAlert, LogOut, ShieldCheck, UserRound } from 'lucide-angular';
 import { Observable } from 'rxjs';
+import {UserData} from "@app/models/userdata";
 
 @Component({
   selector: 'app-account',
@@ -50,7 +51,8 @@ export class AccountComponent {
 
       if (success) {
         await message('Inicio de sesión exitoso', { title: 'Éxito', kind: 'info' });
-        const userData = await invoke<any>('load_user_data', { username: this.loginUsername });
+        const userData = await invoke<UserData>('load_user_data', { username: this.loginUsername });
+        console.log(userData);
         if (userData) {
           this.auth.setUser({ ...userData, username: this.loginUsername });
           this.ngZone.run(() => this.cdr.detectChanges());
