@@ -4,17 +4,17 @@ use log::error;
 pub fn validate_login_input(username: &str, password: &str) -> Result<(), String> {
     if username.is_empty() || username.len() > 16 {
         error!("Login attempt with invalid username length");
-        return Err("Credenciales inválidas.".to_string());
+        return Err("Invalid credentials.".to_string());
     }
 
     if password.is_empty() || password.len() > 128 {
         error!("Login attempt with invalid password length");
-        return Err("Credenciales inválidas.".to_string());
+        return Err("Invalid credentials.".to_string());
     }
 
     if !username.chars().all(|c| c.is_alphanumeric() || c == '_') {
         error!("Login attempt with invalid characters in username");
-        return Err("Credenciales inválidas.".to_string());
+        return Err("Invalid credentials.".to_string());
     }
 
     Ok(())
@@ -23,23 +23,23 @@ pub fn validate_login_input(username: &str, password: &str) -> Result<(), String
 /// Validates registration input fields
 pub fn validate_register_input(username: &str, password: &str, invite_code: &str) -> Result<(), String> {
     if username.len() < 3 || username.len() > 16 {
-        return Err("El nombre de usuario debe tener entre 3 y 16 caracteres.".to_string());
+        return Err("Username must be between 3 and 16 characters.".to_string());
     }
 
     if !username.chars().all(|c| c.is_alphanumeric() || c == '_') {
-        return Err("El nombre de usuario solo puede contener letras, números y guiones bajos.".to_string());
+        return Err("Username can only contain letters, numbers and underscores.".to_string());
     }
 
     if password.len() < 8 {
-        return Err("La contraseña debe tener al menos 8 caracteres.".to_string());
+        return Err("Password must be at least 8 characters.".to_string());
     }
 
     if password.len() > 128 {
-        return Err("La contraseña no puede tener más de 128 caracteres.".to_string());
+        return Err("Password cannot exceed 128 characters.".to_string());
     }
 
     if invite_code.is_empty() || invite_code.len() > 64 {
-        return Err("Código de invitación inválido.".to_string());
+        return Err("Invalid invitation code.".to_string());
     }
 
     Ok(())
@@ -52,11 +52,11 @@ pub async fn hash_password(password: String) -> Result<String, String> {
     }).await
         .map_err(|e| {
             error!("Hashing task failed: {}", e);
-            "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.".to_string()
+            "An unexpected error occurred. Please try again.".to_string()
         })?
         .map_err(|e| {
             error!("Password hashing error: {}", e);
-            "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.".to_string()
+            "An unexpected error occurred. Please try again.".to_string()
         })
 }
 
@@ -65,6 +65,6 @@ pub fn verify_password(password: &str, hash: &str) -> Result<bool, String> {
     bcrypt::verify(password, hash)
         .map_err(|e| {
             error!("Error verifying password: {}", e);
-            "Credenciales inválidas.".to_string()
+            "Invalid credentials.".to_string()
         })
 }

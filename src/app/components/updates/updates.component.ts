@@ -34,6 +34,6 @@ export class UpdatesComponent {
 
     private async save() {
         const status = await this.tauri.saveOptions();
-        if (status) await message('Guardado correctamente', { title: 'Éxito', kind: 'info' });
+        if (status) await message('Saved successfully', { title: 'Success', kind: 'info' });
     }
 }

@@ -22,7 +22,7 @@ pub async fn run() {
         eprintln!("Error while setting up the logger: {}", e);
     }
 
-    info!("Iniciando aplicación");
+    info!("Starting application");
 
     if !OptionsRepository::is_launcher_json_present(&options) {
         info!("Options file not found, creating a new one with default settings");
@@ -55,7 +55,7 @@ pub async fn run() {
         }
     };
 
-    info!("Conexión a la base de datos establecida con éxito.");
+    info!("Database connection established successfully.");
 
     let java_installed = java_installer::ensure_java_installed("21").await;
 
@@ -84,9 +84,9 @@ pub async fn run() {
             .run(tauri::generate_context!())
             .expect("error while running tauri application");
     } else {
-        error!("No se pudo instalar Java 21. La aplicación no puede continuar.");
+        error!("Failed to install Java 21. The application cannot continue.");
         java_installer::show_info_message(
-            "La aplicación requiere Java 21 para funcionar. Por favor, instale Java 21 e intente nuevamente."
+            "The application requires Java 21 to run. Please install Java 21 and try again."
         );
     }
 }

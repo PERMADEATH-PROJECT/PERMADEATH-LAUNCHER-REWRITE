@@ -30,11 +30,11 @@ impl SessionService {
         )
             .execute(&self.pool)
             .await
-            .map_err(|e| format!("Error guardando sesión en DB: {}", e))?;
+            .map_err(|e| format!("Error saving session to DB: {}", e))?;
 
-        self.save_token_to_keyring(&token).expect("Error guardando token en keyring");
+        self.save_token_to_keyring(&token).expect("Error saving token to keyring");
 
-        info!("Sesión creada para usuario ID: {}", user_id);
+        info!("Session created for user ID: {}", user_id);
         Ok(token)
     }
 
@@ -55,11 +55,11 @@ impl SessionService {
 
         match result {
             Some(row) => {
-                info!("Token válido para: {}", row.minecraft_username);
+                info!("Valid token for: {}", row.minecraft_username);
                 Ok(Some((row.user_id, row.minecraft_username)))
             }
             None => {
-                info!("Token inválido o expirado");
+                info!("Invalid or expired token");
                 Ok(None)
             }
         }
@@ -72,7 +72,7 @@ impl SessionService {
         entry.unwrap().set_password(token)
             .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)?;
 
-        info!("Token guardado en el keyring del sistema (v2)");
+        info!("Token saved to system keyring (v2)");
         Ok(())
     }
 
@@ -82,15 +82,15 @@ impl SessionService {
 
         match entry?.get_password() {
             Ok(token) => {
-                info!("Token recuperado del keyring");
+                info!("Token retrieved from keyring");
                 Ok(Some(token))
             }
             Err(keyring::Error::NoEntry) => {
-                info!("No se encontró token en el keyring");
+                info!("No token found in keyring");
                 Ok(None)
             }
             Err(e) => {
-                error!("Error leyendo token del keyring: {:?}", e);
+                error!("Error reading token from keyring: {:?}", e);
                 Ok(None)
             }
         }
@@ -101,15 +101,15 @@ impl SessionService {
         sqlx::query!("DELETE FROM sessions WHERE session_token = ?", token)
             .execute(&self.pool)
             .await
-            .map_err(|e| format!("Error eliminando sesión de DB: {}", e))?;
+            .map_err(|e| format!("Error deleting session from DB: {}", e))?;
 
         let entry = Entry::new(SERVICE_NAME, TOKEN_USERNAME);
 
         if let Err(e) = entry.unwrap().delete_password() {
-            error!("Error eliminando credencial del keyring: {}", e);
+            error!("Error deleting credential from keyring: {}", e);
         }
 
-        info!("Sesión eliminada");
+        info!("Session deleted");
         Ok(())
     }
 }

@@ -3,7 +3,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserData } from '@app/models/userdata';
 
-/** Gestiona el estado de autenticación y sesión del usuario */
+/** Manages authentication state and user session */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private userSubject = new BehaviorSubject<UserData | null>(null);
@@ -23,7 +23,7 @@ export class AuthService {
     return false;
   }
 
-  /** Actualiza el estado dentro de la zona de Angular para garantizar el refresco de la vista */
+  /** Updates state inside Angular zone to ensure view refresh */
   setUser(user: UserData | null) {
     this.ngZone.run(() => this.userSubject.next(user));
   }

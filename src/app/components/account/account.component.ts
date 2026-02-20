@@ -50,15 +50,14 @@ export class AccountComponent {
       });
 
       if (success) {
-        await message('Inicio de sesión exitoso', { title: 'Éxito', kind: 'info' });
+        await message('Login successful', { title: 'Success', kind: 'info' });
         const userData = await invoke<UserData>('load_user_data', { username: this.loginUsername });
-        console.log(userData);
         if (userData) {
           this.auth.setUser({ ...userData, username: this.loginUsername });
           this.ngZone.run(() => this.cdr.detectChanges());
         }
       } else {
-        await message('Credenciales incorrectas', { title: 'Error', kind: 'error' });
+        await message('Invalid credentials', { title: 'Error', kind: 'error' });
       }
     } catch (err: any) {
       await message(String(err), { title: 'Error', kind: 'error' });
@@ -67,7 +66,7 @@ export class AccountComponent {
 
   async onRegister() {
     if (this.regPassword !== this.regConfirm) {
-      await message('Las contraseñas no coinciden', { title: 'Error', kind: 'error' });
+      await message('Passwords do not match', { title: 'Error', kind: 'error' });
       return;
     }
     try {
@@ -76,17 +75,17 @@ export class AccountComponent {
         password: this.regPassword,
         inviteCode: this.regCode
       });
-      await message(msg, { title: 'Cuenta Creada', kind: 'info' });
+      await message(msg, { title: 'Account Created', kind: 'info' });
       this.ngZone.run(() => this.closeModal());
     } catch (err: any) {
-      await message(String(err), { title: 'Error de Registro', kind: 'error' });
+      await message(String(err), { title: 'Registration Error', kind: 'error' });
     }
   }
 
   async onLogout() {
     await this.auth.logout();
     this.ngZone.run(() => this.cdr.detectChanges());
-    await message('Has cerrado sesión correctamente.', { title: 'Sesión Cerrada', kind: 'info' });
+    await message('You have been logged out successfully.', { title: 'Session Closed', kind: 'info' });
   }
 
   openModal() { this.showRegisterModal = true; }

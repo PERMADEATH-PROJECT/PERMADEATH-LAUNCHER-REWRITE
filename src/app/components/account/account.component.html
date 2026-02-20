@@ -1,7 +1,7 @@
 <div class="dashboard-account-wrapper">
     <h1 class="account-title">
         <lucide-icon [img]="LogIn"></lucide-icon>
-        Gestión de Cuenta
+        Account Management
     </h1>
     <div class="account-grid">
         <section class="account-section account-section--left">
@@ -13,21 +13,21 @@
                 <div id="login-view">
                     <div class="account-warning">
                         <lucide-icon [img]="TriangleAlert"></lucide-icon>
-                        Solo se permite una cuenta por jugador.
+                        Only one account per player is allowed.
                     </div>
                     <form class="account-form" (ngSubmit)="onLogin()">
                         <label class="account-label">
-                            Usuario de Minecraft
-                            <input type="text" class="account-input" placeholder="TuNombreDeUsuario" [(ngModel)]="loginUsername" name="lUser" required />
+                            Minecraft Username
+                            <input type="text" class="account-input" placeholder="YourUsername" [(ngModel)]="loginUsername" name="lUser" required />
                         </label>
                         <label class="account-label">
-                            Contraseña
+                            Password
                             <input type="password" class="account-input" placeholder="********" [(ngModel)]="loginPassword" name="lPass" required />
                         </label>
                         <button class="account-btn account-btn--blue" type="submit">
-                            <lucide-icon [img]="LogIn"></lucide-icon> Iniciar Sesión
+                            <lucide-icon [img]="LogIn"></lucide-icon> Log In
                         </button>
-                        <a class="account-link" (click)="openModal()">Crear Cuenta</a>
+                        <a class="account-link" (click)="openModal()">Create Account</a>
                     </form>
                 </div>
             </ng-container>
@@ -38,17 +38,17 @@
                         <lucide-icon [img]="UserRound"></lucide-icon>
                     </div>
                     <div class="profile-card__content">
-                        <span class="profile-card__welcome">¡Hola de nuevo!</span>
+                        <span class="profile-card__welcome">Welcome back!</span>
                         <h2 class="profile-card__username">{{ user.username }}</h2>
                         <div class="profile-card__badge">
-                            <span class="status-dot"></span> Sesión Activa y Segura
+                            <span class="status-dot"></span> Active & Secure Session
                         </div>
                     </div>
                     <div class="profile-card__actions">
                         <button class="account-btn account-btn--red account-btn--outline" (click)="onLogout()">
-                            <lucide-icon [img]="LogOut"></lucide-icon> Cerrar Sesión
+                            <lucide-icon [img]="LogOut"></lucide-icon> Log Out
                         </button>
-                        <p class="profile-card__disclaimer">La muerte es permanente. Juega con cuidado.</p>
+                        <p class="profile-card__disclaimer">Death is permanent. Play carefully.</p>
                     </div>
                 </div>
             </ng-template>
@@ -61,37 +61,37 @@
             <div class="account-status">
                 <div class="account-avatar"><lucide-icon [img]="User"></lucide-icon></div>
                 <div class="account-status-info">
-                    <span class="account-status-title">Conectado como {{ user.username }}</span>
-                    <span class="account-status-desc">Estadísticas sincronizadas</span>
+                    <span class="account-status-title">Logged in as {{ user.username }}</span>
+                    <span class="account-status-desc">Statistics synced</span>
                 </div>
-                <span class="account-status-state" style="color: #4ade80;">Conectado</span>
+                <span class="account-status-state" style="color: #4ade80;">Connected</span>
             </div>
             <div class="account-status-list">
-                <div class="account-status-item"><span>Estado del Jugador</span><span>{{ user.status ? 'Vivo' : 'Muerto' }}</span></div>
-                <div class="account-status-item"><span>Días Sobrevividos</span><span>{{ user.survived_days }}</span></div>
-                <div class="account-status-item"><span>Última Conexión</span><span>{{ user.last_login }}</span></div>
-                <div class="account-status-item"><span>Rol en el Servidor</span><span>{{ user.server_role }}</span></div>
+                <div class="account-status-item"><span>Player Status</span><span>{{ user.status ? 'Alive' : 'Dead' }}</span></div>
+                <div class="account-status-item"><span>Days Survived</span><span>{{ user.survived_days }}</span></div>
+                <div class="account-status-item"><span>Last Login</span><span>{{ user.last_login }}</span></div>
+                <div class="account-status-item"><span>Server Role</span><span>{{ user.server_role }}</span></div>
             </div>
         </section>
 
         <ng-template #noUserStatus>
             <section class="account-section">
                 <div class="account-section__header account-section__header--green">
-                    <lucide-icon [img]="ShieldCheck"></lucide-icon> Estado de la Cuenta
+                    <lucide-icon [img]="ShieldCheck"></lucide-icon> Account Status
                 </div>
                 <div class="account-status">
                     <div class="account-avatar"><lucide-icon [img]="User"></lucide-icon></div>
                     <div class="account-status-info">
-                        <span class="account-status-title">No conectado</span>
-                        <span class="account-status-desc">Inicia sesión para ver tus estadísticas</span>
+                        <span class="account-status-title">Not logged in</span>
+                        <span class="account-status-desc">Log in to see your statistics</span>
                     </div>
-                    <span class="account-status-state">Desconectado</span>
+                    <span class="account-status-state">Disconnected</span>
                 </div>
                 <div class="account-status-list">
-                    <div class="account-status-item"><span>Estado del Jugador</span><span>--</span></div>
-                    <div class="account-status-item"><span>Días Sobrevividos</span><span>--</span></div>
-                    <div class="account-status-item"><span>Última Conexión</span><span>Nunca</span></div>
-                    <div class="account-status-item"><span>Rol en el Servidor</span><span>--</span></div>
+                    <div class="account-status-item"><span>Player Status</span><span>--</span></div>
+                    <div class="account-status-item"><span>Days Survived</span><span>--</span></div>
+                    <div class="account-status-item"><span>Last Login</span><span>Never</span></div>
+                    <div class="account-status-item"><span>Server Role</span><span>--</span></div>
                 </div>
             </section>
         </ng-template>
@@ -101,17 +101,17 @@
 <div class="modal-overlay" *ngIf="showRegisterModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Crear Cuenta</h2>
+            <h2>Create Account</h2>
             <button class="modal-close-btn" (click)="closeModal()">&times;</button>
         </div>
         <form class="modal-body" (ngSubmit)="onRegister()">
-            <label class="account-label">Usuario <input type="text" class="account-input" [(ngModel)]="regUsername" name="rUser" required /></label>
-            <label class="account-label">Contraseña <input type="password" class="account-input" [(ngModel)]="regPassword" name="rPass" required /></label>
-            <label class="account-label">Confirmar <input type="password" class="account-input" [(ngModel)]="regConfirm" name="rConf" required /></label>
-            <label class="account-label">Código <input type="text" class="account-input" [(ngModel)]="regCode" name="rCode" required /></label>
+            <label class="account-label">Username <input type="text" class="account-input" [(ngModel)]="regUsername" name="rUser" required /></label>
+            <label class="account-label">Password <input type="password" class="account-input" [(ngModel)]="regPassword" name="rPass" required /></label>
+            <label class="account-label">Confirm <input type="password" class="account-input" [(ngModel)]="regConfirm" name="rConf" required /></label>
+            <label class="account-label">Code <input type="text" class="account-input" [(ngModel)]="regCode" name="rCode" required /></label>
             <div class="modal-footer">
-                <button type="button" class="account-btn account-btn--secondary" (click)="closeModal()">Cancelar</button>
-                <button type="submit" class="account-btn account-btn--blue">Crear</button>
+                <button type="button" class="account-btn account-btn--secondary" (click)="closeModal()">Cancel</button>
+                <button type="submit" class="account-btn account-btn--blue">Create</button>
             </div>
         </form>
     </div>

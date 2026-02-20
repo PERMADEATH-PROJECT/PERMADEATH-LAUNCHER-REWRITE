@@ -38,7 +38,7 @@ export class VmComponent implements OnInit {
     this.ngZone.run(() => {});
   }
 
-  /** Persiste todas las opciones de la JVM incluyendo GC y versión de Java */
+  /** Persists all JVM options including GC and Java version */
   async saveVmOptions() {
     if (!this.tauri.gameOptions) return;
 

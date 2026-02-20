@@ -68,7 +68,7 @@ pub async fn ensure_java_installed(java_version: &str) -> bool {
             },
             Err(e) => {
                 error!("Error during Java setup: {}", e);
-                eprintln!("Error durante la configuración de Java: {}", e);
+                eprintln!("Error during Java setup: {}", e);
 
                 show_info_message(
                     &format!("An error occurred during the installation of Java {}. The program will try to continue, but it may not work properly. Even though it might be an error, try re-launching the app. If the problem persists, contact support", java_version)

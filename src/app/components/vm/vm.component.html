@@ -1,26 +1,26 @@
 <div class="dashboard-vm-wrapper" *ngIf="tauri.gameOptions">
   <h1 class="vm-title">
     <lucide-icon [img]="Zap"></lucide-icon>
-    Configuración Java VM
+    Java VM Configuration
   </h1>
 
   <div class="vm-alert vm-alert--yellow">
     <lucide-icon [img]="Info"></lucide-icon>
     <span>
-      PERMADEATHSMP requiere configuraciones específicas de Java para manejar las mecánicas complejas del mod.
-      Cambios incorrectos pueden afectar el rendimiento.
+      PERMADEATHSMP requires specific Java settings to handle the mod's complex mechanics.
+      Incorrect changes may affect performance.
     </span>
   </div>
 
   <form class="vm-grid" (ngSubmit)="saveVmOptions()">
-    <!-- Configuración de memoria asignada al juego -->
+    <!-- Memory allocated to the game -->
     <section class="vm-section">
       <div class="vm-section__header">
-        <lucide-icon [img]="MemoryStick"></lucide-icon> Memoria
+        <lucide-icon [img]="MemoryStick"></lucide-icon> Memory
       </div>
       <div class="vm-row">
         <label class="vm-label">
-          Memoria Asignada
+          Allocated Memory
           <input type="text" class="vm-input" [(ngModel)]="maxRamStr" name="maxRam" />
         </label>
       </div>
@@ -28,17 +28,17 @@
         <div class="vm-recommendation">
           <lucide-icon [img]="Info"></lucide-icon>
           <span>
-            <strong>Recomendación</strong><br>
-            Para PERMADEATHSMP se recomienda mínimo 4 GB debido a los mobs modificados y dimensiones transformadas.
+            <strong>Recommendation</strong><br>
+            PERMADEATHSMP recommends at least 4 GB due to the modded mobs and transformed dimensions.
           </span>
         </div>
       </div>
     </section>
 
-    <!-- Selección de recolector de basura y versión de Java -->
+    <!-- Garbage collector and Java version selection -->
     <section class="vm-section">
       <div class="vm-section__header vm-section__header--green">
-        <lucide-icon [img]="Gauge"></lucide-icon> Rendimiento
+        <lucide-icon [img]="Gauge"></lucide-icon> Performance
       </div>
       <div class="vm-row">
         <label class="vm-label">
@@ -50,7 +50,7 @@
       </div>
       <div class="vm-row">
         <label class="vm-label">
-          Versión de Java
+          Java Version
           <select class="vm-select" [(ngModel)]="tauri.gameOptions.custom_java_path" name="javaVersion">
             <option *ngFor="let ver of javaVersions" [value]="ver">{{ ver }}</option>
           </select>
@@ -58,35 +58,35 @@
       </div>
     </section>
 
-    <!-- Argumentos JVM personalizados -->
+    <!-- Custom JVM arguments -->
     <section class="vm-section vm-section--full">
       <div class="vm-section__header">
-        <lucide-icon [img]="Zap"></lucide-icon> Argumentos JVM
+        <lucide-icon [img]="Zap"></lucide-icon> JVM Arguments
       </div>
       <div class="vm-row">
         <label class="vm-label">
-          Argumentos adicionales
+          Additional arguments
           <textarea class="vm-textarea" rows="2" [(ngModel)]="jvmArgsStr" name="args"></textarea>
         </label>
       </div>
       <div class="vm-row vm-row--buttons">
-        <button type="button" class="vm-btn vm-btn--white" (click)="resetDefaults()">Valores por Defecto</button>
+        <button type="button" class="vm-btn vm-btn--white" (click)="resetDefaults()">Reset to Defaults</button>
       </div>
       <div class="vm-row">
         <div class="vm-critical">
           <lucide-icon [img]="TriangleAlert"></lucide-icon>
           <span>
-            <strong>Configuración Crítica</strong><br>
-            Los argumentos JVM incorrectos pueden causar inestabilidad o fallos. Asegúrate de entender cada cambio.
-            Los valores por defecto están optimizados buscando el mayor rendimiento del juego.
-            Estos valores están optimizados para jugar en multijugador.
+            <strong>Critical Settings</strong><br>
+            Incorrect JVM arguments can cause instability or crashes. Make sure you understand each change.
+            Default values are optimized for maximum game performance.
+            These values are optimized for multiplayer.
           </span>
         </div>
       </div>
     </section>
 
     <div class="vm-footer">
-      <button type="submit" class="vm-btn vm-btn--orange">Aplicar Cambios</button>
+      <button type="submit" class="vm-btn vm-btn--orange">Apply Changes</button>
     </div>
   </form>
 </div>

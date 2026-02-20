@@ -1,10 +1,10 @@
 <div class="dashboard-config-wrapper" *ngIf="tauri.options">
   <h1 class="config-title">
     <lucide-icon [img]="Settings"></lucide-icon>
-    Configuración del Launcher
+    Launcher Settings
   </h1>
   <form class="config-grid" (ngSubmit)="saveConfig()">
-    <!-- Sección General del launcher -->
+    <!-- General launcher section -->
     <section class="config-section">
       <div class="config-section__header">
         <lucide-icon [img]="Settings"></lucide-icon>
@@ -12,9 +12,9 @@
       </div>
       <div class="config-row">
         <label class="config-label">
-          Inicio automático
+          Auto-launch
           <div class="config-inputs">
-            <span class="config-desc">Lanzar el juego automáticamente al abrir</span>
+            <span class="config-desc">Launch the game automatically on startup</span>
             <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.init_on_start" name="init_on_start" id="auto_init" />
             <span class="switch"></span>
           </div>
@@ -22,9 +22,9 @@
       </div>
       <div class="config-row">
         <label class="config-label">
-          Mostrar la consola de depuración
+          Show debug console
           <div class="config-inputs">
-            <span class="config-desc">Cuando se abra el juego, mostrar la consola</span>
+            <span class="config-desc">When the game opens, show the console</span>
             <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.debug_console" name="debug_console" id="debug_console" />
             <span class="switch"></span>
           </div>
@@ -32,28 +32,28 @@
       </div>
     </section>
 
-    <!-- Sección de opciones del juego -->
+    <!-- Game options section -->
     <section class="config-section">
       <div class="config-section__header config-section__header--yellow">
         <lucide-icon [img]="Gamepad2"></lucide-icon>
-        Juego
+        Game
       </div>
       <div class="config-row">
         <label class="config-label">
-          Directorio del juego
+          Game directory
           <div class="config-inputs">
             <div class="input-group">
               <input type="text" class="input-text" [value]="tauri.options.game_dir || '%APPDATA%/.Permadeath'" readonly />
-              <button class="btn btn--light" type="button" (click)="changeGameDir()">Cambiar</button>
+              <button class="btn btn--light" type="button" (click)="changeGameDir()">Change</button>
             </div>
           </div>
         </label>
       </div>
       <div class="config-row">
         <label class="config-label">
-          Copia de seguridad automática
+          Automatic backup
           <div class="config-inputs">
-            <span class="config-desc">Backup de configuración</span>
+            <span class="config-desc">Configuration backup</span>
             <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.automatic_backup" name="automatic_backup" id="automatic_backup" />
             <span class="switch"></span>
           </div>
@@ -62,8 +62,8 @@
     </section>
 
     <div class="config-footer">
-      <button class="btn btn--light" type="button" (click)="resetConfig()">Restablecer</button>
-      <button class="btn btn--red" type="submit">Guardar Cambios</button>
+      <button class="btn btn--light" type="button" (click)="resetConfig()">Reset</button>
+      <button class="btn btn--red" type="submit">Save Changes</button>
     </div>
   </form>
 </div>

@@ -103,7 +103,7 @@
   stroke-width: 2px;
 }
 
-/* Colores de iconos por sección de navegación */
+/* Icon colors per navigation section */
 .icon--white { color: #fff; }
 .icon--gray { color: var(--icon-gray); }
 .icon--yellow { color: var(--icon-yellow); }
