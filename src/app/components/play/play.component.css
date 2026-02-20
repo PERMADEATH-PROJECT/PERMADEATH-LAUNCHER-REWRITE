@@ -1,0 +1,40 @@
+.dashboard { padding: 24px 0 0 0; }
+.alert-warning { display: flex; align-items: flex-start; background: var(--bg-alert); border-radius: 16px; border: 1.5px solid var(--red-soft); color: var(--red); font-weight: 600; font-size: 1.14rem; padding: 22px 32px; margin: 0 auto 32px auto; max-width: 1280px; gap: 18px; box-shadow: 0 1.5px 20px 0 #f12b432c; }
+.alert-warning lucide-icon { width: 32px; height: 32px; min-width: 32px; stroke-width: 2.2px; margin-top: 4px; color: var(--red); }
+.dashboard__content { display: flex; max-width: 1280px; margin: 0 auto; gap: 24px; }
+.panel { border-radius: 14px; background: var(--bg-panel); box-shadow: 0 2px 24px 0 #0000002f; border: 1.5px solid var(--border); padding: 36px 36px 28px 36px; display: flex; flex-direction: column; gap: 0; }
+.panel--main { flex: 1.5; min-width: 0; margin-right: 0; min-width: 520px; background: var(--bg-panel-dark); }
+.panel__title { font-size: 1.38rem; font-weight: 700; letter-spacing: 1.5px; color: var(--red); display: flex; align-items: center; gap: 11px; margin-bottom: 6px; }
+.panel__title lucide-icon { color: var(--red-soft); width: 28px; height: 28px; stroke-width: 2.3px; }
+.panel__subtitle { color: var(--text); font-size: 1.12rem; margin-bottom: 28px; }
+.panel__stats { display: flex; justify-content: flex-start; gap: 72px; margin-bottom: 18px; }
+.panel__stat { display: flex; flex-direction: column; align-items: center; min-width: 90px; }
+.panel__stat-number { font-size: 2.3rem; font-weight: 700; margin-bottom: 3px; letter-spacing: 1px; }
+.panel__stat--red { color: var(--red); }
+.panel__stat--yellow { color: var(--yellow); }
+.panel__stat--purple { color: var(--purple); }
+.panel__stat-label { color: var(--text-dim); font-size: 1.01rem; font-weight: 500; }
+.panel__progress { margin-bottom: 16px; }
+.panel__progress-label { font-size: 1rem; margin-bottom: 4px; color: var(--text-dim); font-weight: 500; }
+.panel__progress-bar-bg { width: 98%; height: 15px; background: #232438; border-radius: 7px; margin-right: 2%; margin-bottom: 3px; overflow: hidden; position: relative; }
+.panel__progress-bar-fg { width: 58%; height: 100%; background: linear-gradient(90deg, var(--red) 60%, var(--purple) 100%); border-radius: 7px; transition: width 0.4s; }
+.panel__info { color: var(--text-dim); font-size: 0.98rem; margin-bottom: 24px; margin-top: 8px; }
+.panel__button { margin-top: 8px; background: var(--red); color: #fff; padding: 18px 0; width: 100%; font-size: 1.17rem; font-weight: 700; border: none; border-radius: 9px; display: flex; justify-content: center; align-items: center; gap: 13px; cursor: pointer; box-shadow: 0 2px 18px 0 #f12b432f; transition: background 0.14s; }
+.panel__button:hover { background: #a0182a; }
+.panel__button lucide-icon { color: #fff; width: 26px; height: 26px; stroke-width: 2.1px; }
+.dashboard__sidepanels { flex: 1; display: flex; flex-direction: column; gap: 22px; min-width: 340px; max-width: 370px; }
+.panel--side { background: var(--bg-panel-side); border: 1.5px solid var(--border-side); padding: 26px 32px 22px 32px; }
+.panel--event { background: var(--bg-panel-event); border-color: #4a277b; }
+.panel__side-title { font-size: 1.08rem; font-weight: 700; color: var(--text-dim); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; letter-spacing: 0.7px; }
+.panel__side-title lucide-icon { color: var(--purple); width: 21px; height: 21px; stroke-width: 2px; }
+.panel__players { display: flex; flex-direction: column; gap: 6px; }
+.panel__player { display: flex; align-items: center; justify-content: space-between; font-size: 1.05rem; font-weight: 500; color: #fff; gap: 18px; margin-bottom: 2px; }
+.panel__player-out { color: var(--dead); text-decoration: line-through; }
+.badge { font-size: 0.93rem; font-weight: 700; padding: 2.5px 14px; border-radius: 8px; margin-left: 9px; display: inline-block; min-width: 46px; text-align: center; letter-spacing: 0.5px; }
+.badge--green { background: var(--green-soft); color: var(--green); }
+.badge--yellow { background: var(--yellow-soft); color: var(--yellow); }
+.badge--red { background: #f12b4333; color: var(--red); }
+.panel__event-main { color: #fff; font-size: 2.1rem; font-weight: 700; margin-bottom: 2px; text-align: center; }
+.panel__event-days { font-size: 2.32rem; color: var(--yellow); display: block; }
+.panel__event-label { font-size: 1.09rem; color: #fff; margin-top: 2px; display: block; font-weight: 500; }
+.panel__event-info { text-align: center; color: var(--purple); font-size: 1.04rem; font-weight: 500; margin-top: 2px; }

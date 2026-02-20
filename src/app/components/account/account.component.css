@@ -1,0 +1,52 @@
+.dashboard-account-wrapper { width: 100%; max-width: 1300px; margin: 0 auto; padding: 44px 0 0 0; display: flex; flex-direction: column; gap: 26px; }
+.account-title { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 28px; display: flex; align-items: center; gap: 14px; letter-spacing: 0.7px; }
+.account-title lucide-icon { color: #a259f7; width: 34px; height: 34px; stroke-width: 2.5px; }
+.account-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; width: 100%; }
+.account-section { background: rgba(18, 21, 32, 0.80); border: 2px solid #272b38; border-radius: 16px; padding: 30px 34px 22px 34px; box-shadow: 0 2px 18px 0 #0000001f; display: flex; flex-direction: column; gap: 16px; }
+.account-section__header { font-size: 1.16rem; font-weight: 700; color: #8ea3cf; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.account-section__header lucide-icon { width: 25px; height: 25px; stroke-width: 2.1px; }
+.account-section__header--green { color: #21e6c1; }
+.account-warning { display: flex; align-items: center; gap: 8px; background: #2c1016e0; border-radius: 9px; border: 1.5px solid #f12b43; color: #f12b43; font-size: 1.09rem; font-weight: 600; padding: 11px 18px; margin-bottom: 8px; }
+.account-warning lucide-icon { color: #f12b43; width: 22px; height: 22px; }
+.account-form { display: flex; flex-direction: column; gap: 14px; margin-top: 3px; }
+.account-label { color: #fff; font-size: 1.07rem; font-weight: 500; display: flex; flex-direction: column; gap: 6px; }
+.account-input { background: #232b38; color: #fff; border: none; border-radius: 7px; font-size: 1.05rem; padding: 10px 16px; outline: none; font-weight: 500; width: inherit; max-width: 500px; box-shadow: 0 1px 4px 0 #0001; margin-top: 3px; }
+.account-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 1.07rem; font-weight: 600; border-radius: 9px; border: none; outline: none; cursor: pointer; padding: 11px 0; margin-top: 12px; width: 100%; justify-content: center; box-shadow: 0 2px 10px 0 #0002; transition: background 0.18s, color 0.18s, border 0.14s; }
+.account-btn--blue { background: #2e4fff; color: #fff; border: 1.5px solid #2e4fff; }
+.account-btn--blue:hover { background: #1b2ca6; }
+.account-btn lucide-icon { color: #fff; width: 22px; height: 22px; stroke-width: 2.2px; }
+.account-link { color: #2e4fff; font-size: 0.97rem; font-weight: 500; margin-top: 7px; text-decoration: none; cursor: pointer; transition: color 0.16s; }
+.account-link:hover { color: #1b2ca6; }
+.account-status { display: flex; align-items: center; gap: 18px; margin-bottom: 9px; margin-top: 6px; }
+.account-avatar { background: #232b3899; border-radius: 50%; padding: 14px; display: flex; align-items: center; justify-content: center; align-content: center; }
+.account-avatar lucide-icon { color: #bcbcc7; width: 36px; height: 36px; stroke-width: 2.2px; align-content: center; align-items: center; text-align: center}
+.account-status-info { display: flex; flex-direction: column; gap: 2px; }
+.account-status-title { font-size: 1.19rem; font-weight: 700; color: #fff; }
+.account-status-desc { font-size: 1.03rem; color: #bcbcc7; }
+.account-status-state { background: #232b3899; color: #bcbcc7; border-radius: 7px; font-size: 1.01rem; font-weight: 600; padding: 6px 15px; margin-left: auto; }
+.account-status-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 6px; }
+.account-status-item { display: flex; align-items: center; justify-content: space-between; font-size: 1.07rem; color: #bcbcc7; font-weight: 500; padding: 2px 0; }
+.account-section--left { display: flex; flex-direction: column; min-height: 400px; }
+.profile-card { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1rem; background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); }
+.profile-card__avatar { width: 100px; height: 100px; background: rgba(59, 130, 246, 0.1); border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; box-shadow: 0 0 20px rgba(59, 130, 246, 0.1); align-content: center;}
+.profile-card__avatar lucide-icon { width: 50px; height: 50px; color: #60a5fa; align-content: center; align-items: center;}
+.profile-card__content { margin-bottom: 2rem; }
+.profile-card__welcome { display: block; font-size: 0.9rem; color: #9ca3af; margin-bottom: 0.25rem; }
+.profile-card__username { margin: 0; font-size: 1.75rem; font-weight: 700; color: #ffffff; letter-spacing: -0.025em; }
+.profile-card__badge { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; padding: 0.35rem 0.75rem; background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2); border-radius: 9999px; font-size: 0.85rem; color: #4ade80; }
+.status-dot { width: 8px; height: 8px; background-color: #4ade80; border-radius: 50%; box-shadow: 0 0 8px rgba(74, 222, 128, 0.5); }
+.profile-card__actions { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.account-btn--outline.account-btn--red { background-color: transparent; border: 2px solid rgba(239, 68, 68, 0.5); color: #ef4444; width: auto; padding: 11px 2rem; }
+.account-btn--outline.account-btn--red:hover { background-color: rgba(239, 68, 68, 0.1); border-color: #ef4444; }
+.profile-card__disclaimer { font-size: 0.8rem; color: #6b7280; margin: 0; }
+
+/* Modal CSS */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(3px); }
+.modal-content { background: #1a1a21; padding: 24px; border-radius: 8px; width: 90%; max-width: 500px; border: 1px solid #333; box-shadow: 0 5px 15px rgba(0,0,0,0.5); color: #fff; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 16px; margin-bottom: 16px; }
+.modal-header h2 { margin: 0; font-size: 1.5rem; color: #fff; }
+.modal-close-btn { background: none; border: none; font-size: 2rem; color: #888; cursor: pointer; padding: 0; }
+.modal-body { display: flex; flex-direction: column; gap: 16px; }
+.modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+.account-btn--secondary { background-color: #fff; color: #000; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+.account-btn--secondary:hover { background-color: #92929b; }

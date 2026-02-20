@@ -1,0 +1,96 @@
+<div class="dashboard">
+  <div class="dashboard-center-wrapper">
+    <div class="alert-warning">
+      <lucide-icon [img]="TriangleAlert"></lucide-icon>
+      <span>
+        <strong>¡ADVERTENCIA!</strong>
+        <br>
+        En PERMADEATHSMP, la muerte es permanente. Una vez que mueras, serás expulsado del servidor para siempre.
+      </span>
+    </div>
+    <div class="dashboard__content">
+      <!-- Panel principal con estadísticas del servidor -->
+      <section class="panel panel--main">
+        <div class="panel__title">
+          <lucide-icon [img]="Skull"></lucide-icon>
+          PERMADEATHSMP
+        </div>
+        <div class="panel__subtitle">
+          ¿Estás preparado para el desafío definitivo de supervivencia?
+        </div>
+        <div class="panel__stats">
+          <div class="panel__stat">
+            <span class="panel__stat-number panel__stat--red">35</span>
+            <span class="panel__stat-label">Día Actual</span>
+          </div>
+          <div class="panel__stat">
+            <span class="panel__stat-number panel__stat--yellow">12</span>
+            <span class="panel__stat-label">Supervivientes</span>
+          </div>
+          <div class="panel__stat">
+            <span class="panel__stat-number panel__stat--purple">8</span>
+            <span class="panel__stat-label">Caídos</span>
+          </div>
+        </div>
+        <div class="panel__progress">
+          <div class="panel__progress-label">Progreso de Dificultad</div>
+          <div class="panel__progress-bar-bg">
+            <div class="panel__progress-bar-fg"></div>
+          </div>
+        </div>
+        <div class="panel__info">
+          Los tótems ahora tienen 1% de probabilidad de fallar. El End está desbloqueado.
+        </div>
+        <button class="panel__button">
+          <lucide-icon [img]="Play"></lucide-icon>
+          INICIAR PERMADEATHSMP
+        </button>
+      </section>
+
+      <!-- Paneles laterales -->
+      <div class="dashboard__sidepanels">
+        <section class="panel panel--side panel--online">
+          <div class="panel__side-title">
+            <lucide-icon [img]="Users"></lucide-icon>
+            Jugadores Online
+          </div>
+          <div class="panel__players">
+            <div class="panel__player">
+              <span>Ponchisao326</span>
+              <span class="badge badge--yellow">Host</span>
+            </div>
+            <div class="panel__player">
+              <span>IkerTc_</span>
+              <span class="badge badge--green">Vivo</span>
+            </div>
+            <div class="panel__player">
+              <span>Nombre</span>
+              <span class="badge badge--green">Vivo</span>
+            </div>
+            <div class="panel__player">
+              <span class="panel__player-out">Nombre</span>
+              <span class="badge badge--red">Muerto</span>
+            </div>
+            <div class="panel__player">
+              <span class="panel__player-out">Nombre</span>
+              <span class="badge badge--red">Muerto</span>
+            </div>
+          </div>
+        </section>
+        <section class="panel panel--side panel--event">
+          <div class="panel__side-title">
+            <lucide-icon [img]="Clock"></lucide-icon>
+            Próximo cambio
+          </div>
+          <div class="panel__event-main">
+            <span class="panel__event-days">5</span>
+            <span class="panel__event-label">días hasta Día 40</span>
+          </div>
+          <div class="panel__event-info">
+            PVP permanente activado
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

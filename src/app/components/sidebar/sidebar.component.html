@@ -1,0 +1,54 @@
+<aside class="sidebar">
+  <div class="sidebar__header">
+    <span class="sidebar__logo">
+      <lucide-icon [img]="Skull" class="sidebar__skull"></lucide-icon>
+      <lucide-icon [img]="Heart" class="sidebar__heart"></lucide-icon>
+    </span>
+    <div>
+      <h1>PERMADEATH</h1>
+      <span class="subtitle">SMP Launcher</span>
+    </div>
+  </div>
+
+  <hr class="sidebar__divider" />
+
+  <nav class="sidebar__nav">
+    <a routerLink="/play" routerLinkActive="sidebar__btn--primary" class="sidebar__btn">
+      <lucide-icon [img]="Swords" class="icon--white"></lucide-icon> Jugar
+    </a>
+    <a routerLink="/config" routerLinkActive="sidebar__btn--primary" class="sidebar__btn">
+      <lucide-icon [img]="Settings" class="icon--gray"></lucide-icon> Configuración
+    </a>
+    <a routerLink="/vm" routerLinkActive="sidebar__btn--primary" class="sidebar__btn">
+      <lucide-icon [img]="Zap" class="icon--yellow"></lucide-icon> Java VM
+    </a>
+    <a routerLink="/updates" routerLinkActive="sidebar__btn--primary" class="sidebar__btn">
+      <lucide-icon [img]="Download" class="icon--blue"></lucide-icon> Actualizaciones
+    </a>
+    <a routerLink="/account" routerLinkActive="sidebar__btn--primary" class="sidebar__btn">
+      <lucide-icon [img]="LogIn" class="icon--purple"></lucide-icon> Cuenta
+    </a>
+  </nav>
+
+  <hr class="sidebar__divider" />
+
+  <section class="sidebar__status">
+    <div class="sidebar__status-header">
+      <button class="sidebar__btn sidebar__btn--exit" (click)="exitApp()">
+        <lucide-icon [img]="LogOut"></lucide-icon> Salir
+      </button>
+    </div>
+    <div class="status__card">
+      <div class="status__row">
+        <span class="status__dot"></span>
+        <span class="status__label">Estado del Servidor</span>
+      </div>
+      <div class="status__info">
+        <span>En línea · 12/20 jugadores</span>
+      </div>
+      <div class="status__critical">
+        <span>Día 35 · Fase Crítica</span>
+      </div>
+    </div>
+  </section>
+</aside>

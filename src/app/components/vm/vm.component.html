@@ -1,0 +1,92 @@
+<div class="dashboard-vm-wrapper" *ngIf="tauri.gameOptions">
+  <h1 class="vm-title">
+    <lucide-icon [img]="Zap"></lucide-icon>
+    Configuración Java VM
+  </h1>
+
+  <div class="vm-alert vm-alert--yellow">
+    <lucide-icon [img]="Info"></lucide-icon>
+    <span>
+      PERMADEATHSMP requiere configuraciones específicas de Java para manejar las mecánicas complejas del mod.
+      Cambios incorrectos pueden afectar el rendimiento.
+    </span>
+  </div>
+
+  <form class="vm-grid" (ngSubmit)="saveVmOptions()">
+    <!-- Configuración de memoria asignada al juego -->
+    <section class="vm-section">
+      <div class="vm-section__header">
+        <lucide-icon [img]="MemoryStick"></lucide-icon> Memoria
+      </div>
+      <div class="vm-row">
+        <label class="vm-label">
+          Memoria Asignada
+          <input type="text" class="vm-input" [(ngModel)]="maxRamStr" name="maxRam" />
+        </label>
+      </div>
+      <div class="vm-row">
+        <div class="vm-recommendation">
+          <lucide-icon [img]="Info"></lucide-icon>
+          <span>
+            <strong>Recomendación</strong><br>
+            Para PERMADEATHSMP se recomienda mínimo 4 GB debido a los mobs modificados y dimensiones transformadas.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selección de recolector de basura y versión de Java -->
+    <section class="vm-section">
+      <div class="vm-section__header vm-section__header--green">
+        <lucide-icon [img]="Gauge"></lucide-icon> Rendimiento
+      </div>
+      <div class="vm-row">
+        <label class="vm-label">
+          Garbage Collector
+          <select class="vm-select" [(ngModel)]="tauri.gameOptions.garbage_collector" name="gc">
+            <option *ngFor="let gc of gcOptions" [value]="gc">{{ gc }}</option>
+          </select>
+        </label>
+      </div>
+      <div class="vm-row">
+        <label class="vm-label">
+          Versión de Java
+          <select class="vm-select" [(ngModel)]="tauri.gameOptions.custom_java_path" name="javaVersion">
+            <option *ngFor="let ver of javaVersions" [value]="ver">{{ ver }}</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <!-- Argumentos JVM personalizados -->
+    <section class="vm-section vm-section--full">
+      <div class="vm-section__header">
+        <lucide-icon [img]="Zap"></lucide-icon> Argumentos JVM
+      </div>
+      <div class="vm-row">
+        <label class="vm-label">
+          Argumentos adicionales
+          <textarea class="vm-textarea" rows="2" [(ngModel)]="jvmArgsStr" name="args"></textarea>
+        </label>
+      </div>
+      <div class="vm-row vm-row--buttons">
+        <button type="button" class="vm-btn vm-btn--white" (click)="resetDefaults()">Valores por Defecto</button>
+      </div>
+      <div class="vm-row">
+        <div class="vm-critical">
+          <lucide-icon [img]="TriangleAlert"></lucide-icon>
+          <span>
+            <strong>Configuración Crítica</strong><br>
+            Los argumentos JVM incorrectos pueden causar inestabilidad o fallos. Asegúrate de entender cada cambio.
+            Los valores por defecto están optimizados buscando el mayor rendimiento del juego.
+            Estos valores están optimizados para jugar en multijugador.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <div class="vm-footer">
+      <button type="submit" class="vm-btn vm-btn--orange">Aplicar Cambios</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,26 @@
+:host {
+    display: block;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer-container {
+    padding: 12px 0 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.footer-info {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    opacity: 0.5;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.footer-info strong {
+    color: var(--text);
+    font-weight: 600;
+}

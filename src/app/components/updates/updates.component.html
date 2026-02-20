@@ -1,0 +1,89 @@
+<div class="dashboard-updates-wrapper" *ngIf="tauri.options">
+  <div class="updates-title-row">
+    <h1 class="updates-title">
+      <lucide-icon [img]="Download"></lucide-icon>
+      Actualizaciones
+    </h1>
+    <button class="updates-btn updates-btn--blue" type="button">
+      <lucide-icon [img]="RefreshCw"></lucide-icon>
+      Buscar Actualizaciones
+    </button>
+  </div>
+
+  <div class="updates-mod-card">
+    <div>
+      <span class="mod-title">PERMADEATHSMP Mod</span>
+      <span class="mod-version">Versión actual: v2.1.2</span>
+      <span class="mod-check">Última verificación: hace 2 horas</span>
+    </div>
+    <div class="updates-mod-status">
+      <span class="updates-status-icon"><lucide-icon [img]="AlertCircle"></lucide-icon></span>
+      <span class="updates-status-label">Actualización Disponible</span>
+    </div>
+  </div>
+
+  <div class="updates-update-card">
+    <div class="update-header-row">
+      <span class="update-header">
+        <lucide-icon [img]="Download"></lucide-icon>
+        Actualización Disponible
+      </span>
+      <span class="update-label-new">Nueva</span>
+    </div>
+    <div class="update-main-row">
+      <div>
+        <span class="update-version-n">v2.1.3</span>
+        <span class="update-version-highlight"> - Mejoras Críticas</span>
+        <span class="update-date">15 de Diciembre, 2024 · 45.2 MB</span>
+      </div>
+      <button class="updates-btn updates-btn--green" type="button">
+        <lucide-icon [img]="Download"></lucide-icon>
+        Descargar
+      </button>
+    </div>
+    <div class="update-desc">
+      Mejoras en el sistema de Esqueletos de Clase, corrección de bugs en Ultra Ravagers
+    </div>
+    <div class="update-news">
+      <span class="update-news-title">Novedades:</span>
+      <ul>
+        <li>Balanceado Esqueletos de Clase V (Pesadilla)</li>
+        <li>Corregido bug crítico de Carlos el Esclavo</li>
+        <li>Optimización del sistema Tren de la Muerte</li>
+        <li>Mejoras de rendimiento en dimensión End transformada</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="updates-config-card">
+    <span class="updates-config-title">Configuración de Actualizaciones</span>
+    <div class="updates-config-row">
+      <div>
+        <span class="updates-config-label">Actualizaciones automáticas</span>
+        <span class="updates-config-desc">Descargar e instalar actualizaciones automáticamente</span>
+      </div>
+      <button class="updates-btn"
+              [ngClass]="tauri.options.auto_update ? 'updates-btn--green' : 'updates-btn--white'"
+              type="button" (click)="toggleUpdate()">
+        {{ tauri.options.auto_update ? 'Habilitadas' : 'Deshabilitadas' }}
+      </button>
+    </div>
+    <div class="updates-config-row">
+      <div>
+        <span class="updates-config-label">Notificaciones</span>
+        <span class="updates-config-desc">Mostrar notificaciones de nuevas versiones</span>
+      </div>
+      <button class="updates-btn"
+              [ngClass]="tauri.options.notification_enabled ? 'updates-btn--green' : 'updates-btn--white'"
+              type="button" (click)="toggleNotifications()">
+        {{ tauri.options.notification_enabled ? 'Habilitadas' : 'Deshabilitadas' }}
+      </button>
+    </div>
+    <div class="updates-config-warning">
+      <span class="updates-config-warning-title">¡Importante!</span>
+      <span class="updates-config-warning-desc">
+        Siempre actualiza antes de unirte al servidor. Las versiones incompatibles harán que no puedas unirte.
+      </span>
+    </div>
+  </div>
+</div>

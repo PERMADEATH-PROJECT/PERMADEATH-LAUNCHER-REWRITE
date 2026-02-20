@@ -1,0 +1,240 @@
+.dashboard-vm-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 42px 0 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.vm-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 0.7px;
+}
+.vm-title lucide-icon {
+    color: #ffe151;
+    width: 34px;
+    height: 34px;
+    stroke-width: 2.5px;
+}
+
+.vm-alert {
+    display: flex;
+    align-items: center;
+    background: rgba(218, 174, 37, 0.13);
+    border: 1.7px solid #ffe151;
+    border-radius: 11px;
+    color: #ffe151;
+    font-weight: 600;
+    font-size: 1.12rem;
+    padding: 17px 28px;
+    margin: 0 auto 28px auto;
+    gap: 14px;
+}
+.vm-alert lucide-icon {
+    width: 28px;
+    height: 28px;
+    stroke-width: 2.1px;
+    color: #ffe151;
+}
+
+.vm-grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: 32px 38px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.vm-section {
+    background: rgba(18, 21, 32, 0.80);
+    border: 2px solid #272b38;
+    border-radius: 13px;
+    padding: 28px 24px 18px 24px;
+    box-shadow: 0 2px 18px 0 #0000001f;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 0;
+}
+
+.vm-section--full {
+    grid-column: 1/3;
+}
+
+.vm-section__header {
+    font-size: 1.19rem;
+    font-weight: 700;
+    color: #8ea3cf;
+    margin-bottom: 11px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    letter-spacing: 0.3px;
+}
+.vm-section__header lucide-icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.2px;
+}
+.vm-section__header--green {
+    color: #21e6c1;
+}
+
+.vm-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2px;
+}
+.vm-label {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    font-size: 1.07rem;
+    font-weight: 500;
+    gap: 3px;
+    flex: 1;
+    position: relative;
+}
+.vm-input,
+.vm-select {
+    background: #232b38;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-size: 1.05rem;
+    padding: 8px 13px;
+    margin-top: 7px;
+    outline: none;
+    font-weight: 500;
+    width: 100%;
+    max-width: 350px;
+    appearance: none;
+    transition: background 0.15s;
+    box-shadow: 0 1px 4px 0 #0001;
+}
+.vm-select {
+    margin-bottom: 2px;
+}
+
+.vm-recommendation {
+    background: #232b68cc;
+    border-radius: 9px;
+    padding: 11px 16px;
+    color: #a2bcff;
+    font-size: 1.01rem;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 6px;
+}
+.vm-recommendation lucide-icon {
+    color: #8ea3cf;
+    width: 22px;
+    height: 22px;
+    stroke-width: 2px;
+}
+
+.vm-textarea {
+    background: #232b38;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-size: 1.02rem;
+    padding: 10px 15px;
+    outline: none;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 7px;
+    box-shadow: 0 1px 4px 0 #0001;
+    resize: none;
+    max-width: 98%;
+}
+
+.vm-row--buttons {
+    justify-content: center;
+    gap: 18px;
+    margin: 15px 0 10px 0;
+}
+
+.vm-btn {
+    border: none;
+    border-radius: 7px;
+    font-size: 1.04rem;
+    padding: 9px 24px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.16s, color 0.16s;
+    outline: none;
+}
+.vm-btn--white {
+    background: #fff;
+    color: #222;
+    border: 1px solid #e0e0e0;
+}
+.vm-btn--white:hover {
+    background: #eee;
+}
+.vm-btn--orange {
+    background: #f7a700;
+    color: #fff;
+    margin-left: 18px;
+    box-shadow: 0 2px 10px 0 #f7a70040;
+}
+.vm-btn--orange:hover {
+    background: #b47611;
+}
+
+.vm-critical {
+    background: #2c1016e0;
+    border-radius: 9px;
+    padding: 11px 16px;
+    color: #f12b43;
+    font-size: 1.01rem;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+    border: 1.5px solid #f12b43;
+}
+.vm-critical lucide-icon {
+    color: #f12b43;
+    width: 22px;
+    height: 22px;
+    stroke-width: 2px;
+}
+
+.vm-footer {
+    grid-column: 1/3;
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    margin-top: 24px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+    .dashboard-vm-wrapper, .vm-grid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .vm-alert {
+        max-width: 100vw;
+    }
+}
+@media (max-width: 900px) {
+    .vm-grid {
+        grid-template-columns: 1fr;
+    }
+    .vm-section--full, .vm-footer {
+        grid-column: 1/2;
+    }
+}

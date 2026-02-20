@@ -1,0 +1,53 @@
+:root {
+  --sidebar-bg: #0a0a0d;
+  --sidebar-fg: #fff;
+  --sidebar-accent: #f12b43;
+  --sidebar-accent-light: #ff758f;
+  --sidebar-divider: #231f23;
+  --sidebar-btn: #151419;
+  --sidebar-btn-hover: #28222b;
+  --sidebar-btn-active: #2e1017;
+  --sidebar-primary: #f12b43;
+  --sidebar-secondary: #5c5c6c;
+  --icon-gray: #b9b7c3;
+  --icon-green: #2ecc40;
+  --icon-yellow: #fcdc58;
+  --icon-blue: #5bc0eb;
+  --icon-purple: #a259f7;
+  --icon-cyan: #21e6c1;
+  --icon-magenta: #b388ff;
+
+  --bg-main: #09090c;
+  --bg-panel: #18151aee;
+  --bg-panel-dark: #131017ee;
+  --bg-panel-side: #181c23e0;
+  --bg-panel-event: #231237e0;
+  --bg-alert: #2c1016cc;
+  --text: #fff;
+  --text-dim: #bcbcc7;
+  --border: #34212a70;
+  --border-side: #2a2c3f;
+  --red: #f12b43;
+  --red-soft: #ff758f;
+  --yellow: #ffe151;
+  --yellow-soft: #ffe15160;
+  --purple: #a259f7;
+  --green: #21e6c1;
+  --green-soft: #21e6c160;
+  --gray: #31313a;
+  --online: #21e6c1;
+  --dead: #f12b43;
+}
+
+html, body {
+  overflow-x: hidden !important;
+}
+
+body {
+  background: var(--bg-main) center/cover no-repeat;
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
