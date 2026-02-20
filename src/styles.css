@@ -44,6 +44,7 @@ html, body {
 }
 
 body {
+  scrollbar-width: none;
   background: var(--bg-main) center/cover no-repeat;
   color: var(--text);
   margin: 0;

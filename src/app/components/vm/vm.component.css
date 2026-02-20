@@ -34,7 +34,7 @@
     font-weight: 600;
     font-size: 1.12rem;
     padding: 17px 28px;
-    margin: 0 auto 28px auto;
+    margin: 0 0 10px 0;
     gap: 14px;
 }
 .vm-alert lucide-icon {
