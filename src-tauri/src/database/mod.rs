@@ -1,8 +1,17 @@
 use sqlx::{Error, MySqlPool};
-use chrono::Utc;
+use chrono::{Utc, NaiveDateTime};
 use log::{info, error};
 
 use crate::models::user::{User, UserData};
+
+#[derive(sqlx::FromRow)]
+struct UserDataRow {
+    server_role: String,
+    avatar_url: Option<String>,
+    player_status: Option<i8>,
+    days_survived: Option<i32>,
+    last_connection: Option<NaiveDateTime>,
+}
 
 /// Main SQL Manager
 pub struct DbManager {
@@ -102,10 +111,11 @@ impl DbManager {
     pub async fn load_user_data(&self, username: &str) -> Result<UserData, Error> {
         info!("Loading user data for: '{}'", username);
 
-        let result = sqlx::query!(
+        let result = sqlx::query_as::<_, UserDataRow>(
             r#"
             SELECT
-                u.id,
+                u.server_role,
+                u.avatar_url,
                 a.player_status,
                 a.days_survived,
                 a.last_connection
@@ -113,22 +123,23 @@ impl DbManager {
             INNER JOIN account_status a ON u.id = a.user_id
             WHERE u.minecraft_username = ?
             "#,
-            username
         )
+            .bind(username)
             .fetch_optional(&self.pool)
             .await?;
 
         match result {
             Some(row) => {
                 let last_login = row.last_connection
-                    .map(|dt| dt.format("%Y-%m-%d %H:%M:%S").to_string())
+                    .map(|dt: NaiveDateTime| dt.format("%Y-%m-%d %H:%M:%S").to_string())
                     .unwrap_or_else(|| "Never".to_string());
 
                 Ok(UserData {
                     status: row.player_status.unwrap_or(0) != 0,
                     survived_days: row.days_survived.unwrap_or(0),
                     last_login,
-                    server_role: "Player".to_string(),
+                    server_role: row.server_role,
+                    avatar_url: row.avatar_url,
                 })
 
             }

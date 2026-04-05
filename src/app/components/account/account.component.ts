@@ -88,6 +88,10 @@ export class AccountComponent {
     await message('You have been logged out successfully.', { title: 'Session Closed', kind: 'info' });
   }
 
+  getAvatarUrl(user: UserData): string {
+    return user.avatar_url ?? `https://minotar.net/helm/${user.username}/100`;
+  }
+
   openModal() { this.showRegisterModal = true; }
   closeModal() { this.showRegisterModal = false; }
 }

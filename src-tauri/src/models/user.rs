@@ -14,6 +14,7 @@ pub struct UserData {
     pub survived_days: i32,
     pub last_login: String,
     pub server_role: String,
+    pub avatar_url: Option<String>,
 }
 
 #[derive(serde::Serialize)]

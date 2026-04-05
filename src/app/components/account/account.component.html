@@ -35,7 +35,7 @@
             <ng-template #loggedInTpl>
                 <div class="profile-card" *ngIf="user$ | async as user">
                     <div class="profile-card__avatar">
-                        <lucide-icon [img]="UserRound"></lucide-icon>
+                        <img [src]="getAvatarUrl(user)" [alt]="user.username" class="profile-card__avatar-img" />
                     </div>
                     <div class="profile-card__content">
                         <span class="profile-card__welcome">Welcome back!</span>
@@ -56,10 +56,12 @@
 
         <section class="account-section" *ngIf="user$ | async as user; else noUserStatus">
             <div class="account-section__header account-section__header--green">
-                <lucide-icon [img]="ShieldCheck"></lucide-icon> Estado de la Cuenta
+                <lucide-icon [img]="ShieldCheck"></lucide-icon> Account Status
             </div>
             <div class="account-status">
-                <div class="account-avatar"><lucide-icon [img]="User"></lucide-icon></div>
+                <div class="account-avatar">
+                    <img [src]="getAvatarUrl(user)" [alt]="user.username" class="account-avatar-img" />
+                </div>
                 <div class="account-status-info">
                     <span class="account-status-title">Logged in as {{ user.username }}</span>
                     <span class="account-status-desc">Statistics synced</span>

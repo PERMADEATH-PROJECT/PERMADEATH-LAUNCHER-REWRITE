@@ -3,5 +3,6 @@ export interface UserData {
     survived_days: number;
     last_login: string;
     server_role: string;
+    avatar_url: string | null;
     username: string;
 }
