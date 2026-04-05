@@ -68,11 +68,17 @@ impl LauncherOptions {
     }
 }
 
+fn default_java_version() -> String {
+    "Java 21".to_string()
+}
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct GameOptions {
     max_ram: u32,
     vm_flags: Vec<String>,
     garbage_collector: GarbageCollector,
+    #[serde(default = "default_java_version")]
+    pub custom_java_path: String,
 }
 
 impl GameOptions {
@@ -81,6 +87,7 @@ impl GameOptions {
             max_ram: 4096,
             vm_flags: BASE_VM_FLAGS.iter().map(|s| s.to_string()).collect(),
             garbage_collector: GarbageCollector::G1GC,
+            custom_java_path: default_java_version(),
         }
     }
 
