@@ -23,6 +23,10 @@ export class AuthService {
     return false;
   }
 
+  get currentUser(): UserData | null {
+    return this.userSubject.getValue();
+  }
+
   /** Updates state inside Angular zone to ensure view refresh */
   setUser(user: UserData | null) {
     this.ngZone.run(() => this.userSubject.next(user));

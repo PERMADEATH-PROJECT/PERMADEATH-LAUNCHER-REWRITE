@@ -30,6 +30,16 @@
           </div>
         </label>
       </div>
+      <div class="config-row">
+        <label class="config-label">
+          Hide launcher on launch
+          <div class="config-inputs">
+            <span class="config-desc">Hide the launcher window while the game is running</span>
+            <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.close_on_launch" name="close_on_launch" id="close_on_launch" />
+            <span class="switch"></span>
+          </div>
+        </label>
+      </div>
     </section>
 
     <!-- Game options section -->

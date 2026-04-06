@@ -6,6 +6,7 @@ export interface LauncherOptions {
     notification_enabled: boolean;
     debug_console: boolean;
     automatic_backup: boolean;
+    close_on_launch: boolean;
 }
 
 export interface GameOptions {

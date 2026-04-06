@@ -42,3 +42,4 @@ dotenvy = "0.15.7"
 bcrypt = "0.17.1"
 keyring = "2.3.3"
 uuid = { version = "1.18.1", features = ["v4"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"] }

@@ -10,6 +10,7 @@ use database::DbManager;
 use services::session_service::SessionService;
 use services::options_repository::OptionsRepository;
 use services::java_installer;
+use services::game_service::GameManager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 #[tokio::main]
@@ -67,6 +68,7 @@ pub async fn run() {
             .plugin(tauri_plugin_opener::init())
             .manage(db_manager)
             .manage(session_service)
+            .manage(GameManager::new())
             .invoke_handler(tauri::generate_handler![
                 commands::options::read_options,
                 commands::options::save_options,
@@ -80,6 +82,11 @@ pub async fn run() {
                 commands::auth::check_session,
                 commands::auth::logout,
                 commands::auth::load_user_data,
+                commands::game::launch_game,
+                commands::game::stop_game,
+                commands::game::get_game_state,
+                commands::game::check_ms_auth_state,
+                commands::game::get_server_status,
             ])
             .run(tauri::generate_context!())
             .expect("error while running tauri application");

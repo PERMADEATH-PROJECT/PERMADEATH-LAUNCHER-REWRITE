@@ -1,96 +1,159 @@
-<div class="dashboard">
-  <div class="dashboard-center-wrapper">
-    <div class="alert-warning">
-      <lucide-icon [img]="TriangleAlert"></lucide-icon>
-      <span>
-        <strong>WARNING!</strong>
-        <br>
-        In PERMADEATHSMP, death is permanent. Once you die, you will be kicked from the server forever.
-      </span>
-    </div>
-    <div class="dashboard__content">
-      <!-- Main panel with server statistics -->
-      <section class="panel panel--main">
-        <div class="panel__title">
-          <lucide-icon [img]="Skull"></lucide-icon>
-          PERMADEATHSMP
-        </div>
-        <div class="panel__subtitle">
-          Are you ready for the ultimate survival challenge?
-        </div>
-        <div class="panel__stats">
-          <div class="panel__stat">
-            <span class="panel__stat-number panel__stat--red">35</span>
-            <span class="panel__stat-label">Current Day</span>
-          </div>
-          <div class="panel__stat">
-            <span class="panel__stat-number panel__stat--yellow">12</span>
-            <span class="panel__stat-label">Survivors</span>
-          </div>
-          <div class="panel__stat">
-            <span class="panel__stat-number panel__stat--purple">8</span>
-            <span class="panel__stat-label">Fallen</span>
-          </div>
-        </div>
-        <div class="panel__progress">
-          <div class="panel__progress-label">Difficulty Progress</div>
-          <div class="panel__progress-bar-bg">
-            <div class="panel__progress-bar-fg"></div>
-          </div>
-        </div>
-        <div class="panel__info">
-          Totems now have a 1% chance to fail. The End is unlocked.
-        </div>
-        <button class="panel__button">
-          <lucide-icon [img]="Play"></lucide-icon>
-          LAUNCH PERMADEATHSMP
-        </button>
-      </section>
+<div class="play-wrapper">
 
-      <!-- Paneles laterales -->
-      <div class="dashboard__sidepanels">
-        <section class="panel panel--side panel--online">
-          <div class="panel__side-title">
-            <lucide-icon [img]="Users"></lucide-icon>
-            Online Players
-          </div>
-          <div class="panel__players">
-            <div class="panel__player">
-              <span>Ponchisao326</span>
-              <span class="badge badge--yellow">Host</span>
-            </div>
-            <div class="panel__player">
-              <span>IkerTc_</span>
-              <span class="badge badge--green">Alive</span>
-            </div>
-            <div class="panel__player">
-              <span>Nombre</span>
-              <span class="badge badge--green">Alive</span>
-            </div>
-            <div class="panel__player">
-              <span class="panel__player-out">Nombre</span>
-              <span class="badge badge--red">Dead</span>
-            </div>
-            <div class="panel__player">
-              <span class="panel__player-out">Nombre</span>
-              <span class="badge badge--red">Dead</span>
-            </div>
-          </div>
-        </section>
-        <section class="panel panel--side panel--event">
-          <div class="panel__side-title">
-            <lucide-icon [img]="Clock"></lucide-icon>
-            Next Change
-          </div>
-          <div class="panel__event-main">
-            <span class="panel__event-days">5</span>
-            <span class="panel__event-label">days until Day 40</span>
-          </div>
-          <div class="panel__event-info">
-            Permanent PVP activated
-          </div>
-        </section>
+  <!-- ===================================================================== -->
+  <!-- Main grid                                                              -->
+  <!-- ===================================================================== -->
+  <div class="play-grid">
+
+    <!-- ------------------------------------------------------------------- -->
+    <!-- Left: game card + launch controls                                    -->
+    <!-- ------------------------------------------------------------------- -->
+    <section class="card card--main">
+      <div class="card__brand">
+        <lucide-icon [img]="Skull"></lucide-icon>
+        <div>
+          <div class="card__title">PERMADEATHSMP</div>
+          <div class="card__subtitle">{{ serverStatus?.version || 'Minecraft 1.20.1 · Fabric' }}</div>
+        </div>
       </div>
+
+      <!-- MOTD from server -->
+      <div class="card__motd" *ngIf="serverStatus?.online && serverStatus?.motd">
+        {{ serverStatus!.motd }}
+      </div>
+
+      <!-- Auth gate notice -->
+      <div class="card__auth-notice" *ngIf="!isLoggedIn">
+        <lucide-icon [img]="Lock"></lucide-icon>
+        Log into your Permadeath account to play.
+      </div>
+
+      <!-- Downloading state -->
+      <div class="card__status card__status--dl" *ngIf="isDownloading">
+        <lucide-icon [img]="Download"></lucide-icon>
+        Downloading game files…
+      </div>
+
+      <!-- Running state -->
+      <div class="card__status card__status--run" *ngIf="isRunning">
+        <span class="pulse"></span>
+        Game running as <strong>{{ currentUser?.username }}</strong>
+      </div>
+
+      <!-- Buttons -->
+      <div class="card__actions">
+        <button
+          class="btn btn--launch"
+          [disabled]="!canLaunch"
+          (click)="launchGame()"
+          *ngIf="!isRunning && !isDownloading">
+          <lucide-icon [img]="Play"></lucide-icon>
+          {{ isLoggedIn ? 'LAUNCH PERMADEATHSMP' : 'LOG IN TO PLAY' }}
+        </button>
+
+        <button class="btn btn--stop" (click)="stopGame()" *ngIf="isRunning">
+          <lucide-icon [img]="Square"></lucide-icon>
+          STOP GAME
+        </button>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------- -->
+    <!-- Right: online players                                                -->
+    <!-- ------------------------------------------------------------------- -->
+    <section class="card card--players">
+      <div class="card__section-title">
+        <lucide-icon [img]="Users"></lucide-icon>
+        Online Players
+        <span class="card__section-badge" *ngIf="serverStatus?.online">
+          {{ serverStatus!.players_online }} / {{ serverStatus!.players_max }}
+        </span>
+        <span class="card__section-offline" *ngIf="serverStatus && !serverStatus.online">
+          <lucide-icon [img]="SignalLow"></lucide-icon> Offline
+        </span>
+        <span class="card__section-loading" *ngIf="!serverStatus && serverLoading">…</span>
+      </div>
+
+      <!-- Player list -->
+      <ng-container *ngIf="serverStatus?.online; else serverOffline">
+        <div class="players-list" *ngIf="serverStatus!.players_online > 0; else noPlayers">
+          <div class="player-row" *ngFor="let name of serverStatus!.player_names">
+            <div class="player-avatar">
+              <img
+                [src]="'https://minotar.net/helm/' + name + '/28'"
+                [alt]="name"
+                loading="lazy"
+                onerror="this.style.display='none'" />
+            </div>
+            <span class="player-name">{{ name }}</span>
+            <span class="player-badge player-badge--alive">Online</span>
+          </div>
+          <div class="players-extra"
+               *ngIf="serverStatus!.players_online > serverStatus!.player_names.length">
+            + {{ serverStatus!.players_online - serverStatus!.player_names.length }} more
+          </div>
+        </div>
+        <ng-template #noPlayers>
+          <p class="players-empty">No players online right now.</p>
+        </ng-template>
+      </ng-container>
+
+      <ng-template #serverOffline>
+        <p class="players-empty" *ngIf="serverStatus">Server is currently offline.</p>
+        <p class="players-empty" *ngIf="!serverStatus">Fetching server status…</p>
+      </ng-template>
+
+      <button class="btn-refresh" (click)="refreshServerStatus()" [disabled]="serverLoading">
+        {{ serverLoading ? 'Refreshing…' : '↻ Refresh' }}
+      </button>
+    </section>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- Debug console (shown when debug_console option is on)                 -->
+  <!-- ===================================================================== -->
+  <section class="debug-console" *ngIf="showDebugConsole">
+    <div class="debug-console__header">
+      <span class="debug-console__title">
+        <lucide-icon [img]="Terminal"></lucide-icon>
+        Game Console
+      </span>
+      <button class="debug-console__clear" (click)="clearLog()">Clear</button>
+    </div>
+    <div class="debug-console__body" #consoleLog>
+      <div
+        *ngFor="let line of logLines"
+        class="debug-console__line"
+        [class.debug-console__line--error]="line.isError">{{ line.text }}</div>
+      <div *ngIf="logLines.length === 0" class="debug-console__empty">
+        No output yet. Launch the game to see logs here.
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ======================================================================= -->
+<!-- Microsoft Auth Modal                                                     -->
+<!-- ======================================================================= -->
+<div class="auth-modal-overlay" *ngIf="showAuthModal" (click)="onAuthChoice(false)">
+  <div class="auth-modal" (click)="$event.stopPropagation()">
+    <div class="auth-modal__icon">
+      <lucide-icon [img]="Skull"></lucide-icon>
+    </div>
+    <h2 class="auth-modal__title">Minecraft Authentication</h2>
+    <p class="auth-modal__text">
+      Do you want to log in with a <strong>Microsoft account</strong>?<br>
+      Your browser will open for authentication.
+    </p>
+    <div class="auth-modal__buttons">
+      <button class="auth-btn auth-btn--ms" (click)="onAuthChoice(true)">
+        <lucide-icon [img]="Globe"></lucide-icon>
+        Yes, use Microsoft
+      </button>
+      <button class="auth-btn auth-btn--offline" (click)="onAuthChoice(false)">
+        Play as {{ currentUser?.username }} (Offline)
+      </button>
     </div>
   </div>
 </div>

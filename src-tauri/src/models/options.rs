@@ -3,6 +3,7 @@ use dirs_next::config_dir;
 use log::info;
 
 pub const BASE_VM_FLAGS: [&str; 10] = [
+    "-XX:+UnlockExperimentalVMOptions", // Must be first — required before any experimental flags
     "-XX:MaxGCPauseMillis=100",
     "-XX:G1NewSizePercent=30",
     "-XX:G1ReservePercent=20",
@@ -12,7 +13,6 @@ pub const BASE_VM_FLAGS: [&str; 10] = [
     "-XX:+AlwaysPreTouch",
     "-Dsun.java2d.opengl=true",
     "-Xverify:none",
-    "-XX:+UnlockExperimentalVMOptions"
 ];
 
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -33,6 +33,9 @@ pub struct LauncherOptions {
     pub notification_enabled: bool,
     pub debug_console: bool,
     automatic_backup: bool,
+    /// Hide the launcher window when the game starts; restore it on exit.
+    #[serde(default)]
+    pub close_on_launch: bool,
 }
 
 impl LauncherOptions {
@@ -57,6 +60,7 @@ impl LauncherOptions {
             notification_enabled: false,
             debug_console: false,
             automatic_backup: true,
+            close_on_launch: false,
         }
     }
 

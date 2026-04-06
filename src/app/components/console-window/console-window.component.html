@@ -1,0 +1,22 @@
+<div class="cw-root">
+  <div class="cw-header">
+    <span class="cw-title">
+      <lucide-icon [img]="Skull"></lucide-icon>
+      PERMADEATHSMP — Game Console
+    </span>
+    <div class="cw-header-right">
+      <span class="cw-status" [class.cw-status--running]="isRunning" [class.cw-status--stopped]="!isRunning">
+        {{ isRunning ? 'Running' : (exitCode !== null && exitCode !== 0 ? '⚠ Crashed (code ' + exitCode + ')' : 'Stopped') }}
+      </span>
+      <button class="cw-btn cw-btn--clear" (click)="clearLog()">Clear</button>
+      <button class="cw-btn cw-btn--stop" *ngIf="isRunning" (click)="stopGame()">
+        <lucide-icon [img]="Square"></lucide-icon> Stop
+      </button>
+    </div>
+  </div>
+
+  <div class="cw-body" #consoleEl>
+    <div *ngFor="let line of logLines" class="cw-line" [class.cw-line--error]="line.isError">{{ line.text }}</div>
+    <div *ngIf="logLines.length === 0" class="cw-empty">Waiting for game output…</div>
+  </div>
+</div>

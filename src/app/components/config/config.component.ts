@@ -41,6 +41,7 @@ export class ConfigComponent {
       this.tauri.options.init_on_start = false;
       this.tauri.options.debug_console = false;
       this.tauri.options.automatic_backup = true;
+      this.tauri.options.close_on_launch = false;
       this.tauri.options.game_dir = gameDir;
       const status = await this.tauri.saveOptions();
       if (status) {
