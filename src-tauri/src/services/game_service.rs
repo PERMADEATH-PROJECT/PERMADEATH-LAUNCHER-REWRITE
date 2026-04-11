@@ -22,6 +22,7 @@ pub enum GameState {
 }
 
 #[derive(Clone, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GameLogLine {
     pub line: String,
     pub is_error: bool,
@@ -317,6 +318,16 @@ impl GameManager {
                 .build()
                 {
                     error!("Failed to open console window: {}", e);
+                } else {
+                    // Give it a tiny bit of time to initialize and then send a confirmation log
+                    let app_c = app.clone();
+                    tokio::spawn(async move {
+                        tokio::time::sleep(std::time::Duration::from_millis(500)).await;
+                        let _ = app_c.emit_to("console", "game-log", GameLogLine {
+                            line: "=== Console window initialized. Waiting for logs... ===".into(),
+                            is_error: false,
+                        });
+                    });
                 }
             }
             if let Some(win) = app.get_webview_window("main") {

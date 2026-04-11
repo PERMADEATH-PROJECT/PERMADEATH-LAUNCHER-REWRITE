@@ -41,9 +41,9 @@ export class ConsoleWindowComponent implements OnInit, OnDestroy, AfterViewCheck
       this.ngZone.run(() => { this.gameState = e.payload; });
     });
 
-    this.unlistenLog = await listen<{ line: string; is_error: boolean }>('game-log', e => {
+    this.unlistenLog = await listen<{ line: string; isError: boolean }>('game-log', e => {
       this.ngZone.run(() => {
-        this.logLines.push({ text: e.payload.line, isError: e.payload.is_error });
+        this.logLines.push({ text: e.payload.line, isError: e.payload.isError });
         if (this.logLines.length > 800) this.logLines.shift();
         this.shouldScroll = true;
       });
