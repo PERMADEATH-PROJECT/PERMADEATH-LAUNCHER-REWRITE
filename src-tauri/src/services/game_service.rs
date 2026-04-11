@@ -59,20 +59,9 @@ impl GameManager {
     // Microsoft auth state check
     // -----------------------------------------------------------------------
 
-    /// Read the CLI's `config.properties` and return true if a stored MS token exists.
+    /// Checks if a Microsoft token is already stored in the launcher options.
     pub fn has_ms_token(launcher_opts: &LauncherOptions) -> bool {
-        let props_path = launcher_opts
-            .game_dir
-            .clone()
-            .unwrap_or_else(|| PathBuf::from(".permadeath"))
-            .join("config.properties");
-
-        match std::fs::read_to_string(&props_path) {
-            Ok(contents) => contents
-                .lines()
-                .any(|l| l.starts_with("msAccessToken=") && l.len() > "msAccessToken=".len()),
-            Err(_) => false,
-        }
+        launcher_opts.microsoft_token.as_ref().map(|t| !t.is_empty()).unwrap_or(false)
     }
 
     // -----------------------------------------------------------------------
@@ -181,11 +170,23 @@ impl GameManager {
             args.push(mods.to_string_lossy().to_string());
         }
 
-        // If no Microsoft auth is requested, use offline mode with the launcher username.
+        // Authentication logic:
+        // 1. If NOT use_microsoft -> use --offline <username>
+        // 2. If use_microsoft AND we have a token -> use --microsoft <token>
+        // 3. If use_microsoft AND NO token -> no flag (CLI will open browser)
         if !use_microsoft {
+            info!("--offline mode enabled, using username '{}'", username);
             args.push("--offline".to_string());
             args.push(username.to_string());
+        } else if let Some(token) = &launcher_opts.microsoft_token {
+            info!("--microsoft mode enabled with stored token");
+            args.push("--microsoft".to_string());
+            args.push(token.clone());
+        } else {
+            info!("--microsoft mode enabled (no stored token, CLI will open browser)");
         }
+
+        info!("Built CLI arguments: {:?}", args);
 
         args
     }
@@ -254,8 +255,25 @@ impl GameManager {
         let app_out = app.clone();
         tokio::spawn(async move {
             let mut lines = BufReader::new(stdout).lines();
+            let mut capturing_auth = false;
             while let Ok(Some(line)) = lines.next_line().await {
                 info!("[game] {}", line);
+
+                // Token capturing logic
+                if line.trim() == "---AUTH_DATA---" {
+                    capturing_auth = true;
+                } else if line.trim() == "---END_AUTH_DATA---" {
+                    capturing_auth = false;
+                } else if capturing_auth && line.starts_with("REFRESH_TOKEN:") {
+                    let token = line.replace("REFRESH_TOKEN:", "").trim().to_string();
+                    if !token.is_empty() {
+                        info!("Microsoft token captured from game output.");
+                        let mut opts = OptionsRepository::load_launcher_options();
+                        opts.microsoft_token = Some(token);
+                        OptionsRepository::save_launcher_options(&opts);
+                    }
+                }
+
                 let _ = app_out.emit("game-log", GameLogLine { line, is_error: false });
             }
         });
@@ -291,9 +309,11 @@ impl GameManager {
                     WebviewUrl::App("index.html#/console".into()),
                 )
                 .title("PERMADEATHSMP — Console")
-                .inner_size(900.0, 480.0)
+                .inner_size(1000.0, 600.0)
+                .min_inner_size(600.0, 400.0)
                 .resizable(true)
                 .decorations(true)
+                .center()
                 .build()
                 {
                     error!("Failed to open console window: {}", e);
@@ -324,7 +344,12 @@ impl GameManager {
                     let _ = app.emit("game-exited", code);
                     if close_launcher {
                         if let Some(w) = app.get_webview_window("console") { let _ = w.close(); }
-                        if let Some(w) = app.get_webview_window("main")    { let _ = w.show();  }
+                        if let Some(w) = app.get_webview_window("main")    {
+                            let _ = w.set_fullscreen(true);
+                            let _ = w.unminimize();
+                            let _ = w.show();
+                            let _ = w.set_focus();
+                        }
                     }
                 },
                 _ = kill_rx => {
@@ -337,7 +362,12 @@ impl GameManager {
                     let _ = app.emit("game-exited", -1i32);
                     if close_launcher {
                         if let Some(w) = app.get_webview_window("console") { let _ = w.close(); }
-                        if let Some(w) = app.get_webview_window("main")    { let _ = w.show();  }
+                        if let Some(w) = app.get_webview_window("main")    {
+                            let _ = w.set_fullscreen(true);
+                            let _ = w.unminimize();
+                            let _ = w.show();
+                            let _ = w.set_focus();
+                        }
                     }
                 }
             }

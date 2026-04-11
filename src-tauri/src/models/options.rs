@@ -36,6 +36,7 @@ pub struct LauncherOptions {
     /// Hide the launcher window when the game starts; restore it on exit.
     #[serde(default)]
     pub close_on_launch: bool,
+    pub microsoft_token: Option<String>,
 }
 
 impl LauncherOptions {
@@ -61,6 +62,7 @@ impl LauncherOptions {
             debug_console: false,
             automatic_backup: true,
             close_on_launch: false,
+            microsoft_token: None,
         }
     }
 
