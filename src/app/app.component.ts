@@ -14,7 +14,9 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
   template: `
     <ng-container *ngIf="isLoaded">
       <!-- Console window: full-screen, no sidebar/footer -->
-      <router-outlet *ngIf="isConsoleWindow"></router-outlet>
+      <ng-container *ngIf="isConsoleWindow">
+        <router-outlet></router-outlet>
+      </ng-container>
 
       <!-- Main launcher window -->
       <div class="main-layout" *ngIf="!isConsoleWindow">

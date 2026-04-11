@@ -136,7 +136,7 @@
 <!-- ======================================================================= -->
 <!-- Microsoft Auth Modal                                                     -->
 <!-- ======================================================================= -->
-<div class="auth-modal-overlay" *ngIf="showAuthModal" (click)="onAuthChoice(false)">
+<div class="auth-modal-overlay" *ngIf="showAuthModal" (click)="onAuthChoice(null)">
   <div class="auth-modal" (click)="$event.stopPropagation()">
     <div class="auth-modal__icon">
       <lucide-icon [img]="Skull"></lucide-icon>

@@ -288,7 +288,7 @@ impl GameManager {
                 if let Err(e) = WebviewWindowBuilder::new(
                     &app,
                     "console",
-                    WebviewUrl::App("/index.html".into()),
+                    WebviewUrl::App("index.html#/console".into()),
                 )
                 .title("PERMADEATHSMP — Console")
                 .inner_size(900.0, 480.0)
@@ -300,6 +300,8 @@ impl GameManager {
                 }
             }
             if let Some(win) = app.get_webview_window("main") {
+                let _ = win.set_fullscreen(false);
+                let _ = win.minimize();
                 let _ = win.hide();
             }
         }

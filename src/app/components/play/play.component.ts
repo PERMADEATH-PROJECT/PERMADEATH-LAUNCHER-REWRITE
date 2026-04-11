@@ -54,7 +54,7 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   // Auth modal
   showAuthModal = false;
-  private authModalResolve: ((v: boolean) => void) | null = null;
+  private authModalResolve: ((v: boolean | null) => void) | null = null;
 
   private shouldScrollLog = false;
   private statusInterval?: ReturnType<typeof setInterval>;
@@ -150,16 +150,16 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewChecked {
   // Auth modal
   // -------------------------------------------------------------------------
 
-  private askMicrosoftAuth(): Promise<boolean> {
+  private askMicrosoftAuth(): Promise<boolean | null> {
     return new Promise(resolve => {
       this.authModalResolve = resolve;
       this.showAuthModal = true;
     });
   }
 
-  onAuthChoice(useMicrosoft: boolean): void {
+  onAuthChoice(choice: boolean | null): void {
     this.showAuthModal = false;
-    this.authModalResolve?.(useMicrosoft);
+    this.authModalResolve?.(choice);
     this.authModalResolve = null;
   }
 
@@ -168,17 +168,24 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewChecked {
   // -------------------------------------------------------------------------
 
   async launchGame(): Promise<void> {
-    if (!this.currentUser) {
-      await message('You must be logged in to play.', { title: 'Not logged in', kind: 'error' });
-      return;
-    }
+    if (!this.currentUser) return;
 
-    // Check if the CLI already has a stored MS token
     const hasToken = await invoke<boolean>('check_ms_auth_state');
-    const useMicrosoft = hasToken ? true : await this.askMicrosoftAuth();
+    let useMicrosoft: boolean | null = hasToken ? true : null;
+
+    if (!hasToken) {
+      useMicrosoft = await this.askMicrosoftAuth();
+
+      // Si el usuario cerró el modal pulsando fuera (null), DETENEMOS LA FUNCIÓN AQUÍ.
+      if (useMicrosoft === null) {
+        return;
+      }
+    }
 
     try {
       this.logLines = [];
+      // Llegados a este punto, useMicrosoft es 100% un boolean (true o false).
+      // Usamos camelCase porque Tauri lo traduce internamente al snake_case de Rust.
       await invoke('launch_game', { username: this.currentUser.username, useMicrosoft });
     } catch (err: any) {
       await message(String(err), { title: 'Launch Error', kind: 'error' });
