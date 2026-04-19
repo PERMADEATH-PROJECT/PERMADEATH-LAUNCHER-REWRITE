@@ -15,9 +15,9 @@
       {
         "label": "main",
         "title": "Permadeath Launcher",
-        "width": 1280,
+        "width": 1480,
         "height": 920,
-        "minWidth": 1280,
+        "minWidth": 1480,
         "minHeight": 920,
         "center": true,
         "resizable": true,
