@@ -13,16 +13,14 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
   imports: [CommonModule, RouterOutlet, SidebarComponent, FooterComponent],
   template: `
     <ng-container *ngIf="isLoaded">
-      <!-- Console window: full-screen, no sidebar/footer -->
       <ng-container *ngIf="isConsoleWindow">
         <router-outlet></router-outlet>
       </ng-container>
 
-      <!-- Main launcher window -->
-      <div class="main-layout" *ngIf="!isConsoleWindow">
+      <div class="flex h-screen w-screen overflow-hidden" *ngIf="!isConsoleWindow">
         <app-sidebar></app-sidebar>
-        <main class="dashboard">
-          <div class="dashboard-center-wrapper">
+        <main class="flex-1 min-w-0 flex flex-col overflow-y-auto">
+          <div class="w-full flex flex-col gap-4 pt-6 flex-1 px-6 max-w-screen-xl mx-auto">
             <router-outlet></router-outlet>
           </div>
           <app-footer></app-footer>
@@ -30,14 +28,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
       </div>
     </ng-container>
   `,
-  styles: [`
-    :host { display: block; height: 100vh; }
-    .main-layout { display: flex; min-height: 100vh; width: 100vw; overflow-x: auto; }
-    .dashboard { flex: 1; min-width: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: flex-start; padding: 0; width: 100%; overflow-y: auto; }
-    .dashboard-center-wrapper { width: 100%; margin: 0 auto; display: flex; flex-direction: column;
-      justify-content: flex-start; gap: 16px; padding-top: 24px; flex: 1; }
-  `]
+  styles: [`:host { display: block; height: 100vh; }`]
 })
 export class AppComponent implements OnInit {
   isLoaded = false;

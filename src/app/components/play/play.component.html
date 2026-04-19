@@ -1,131 +1,128 @@
-<div class="play-wrapper">
+<div class="flex flex-col gap-6 pb-6 w-full">
 
-  <!-- ===================================================================== -->
-  <!-- Main grid                                                              -->
-  <!-- ===================================================================== -->
-  <div class="play-grid">
+  <!-- Main grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 w-full">
 
-    <!-- ------------------------------------------------------------------- -->
-    <!-- Left: game card + launch controls                                    -->
-    <!-- ------------------------------------------------------------------- -->
-    <section class="card card--main">
-      <div class="card__brand">
-        <lucide-icon [img]="Skull"></lucide-icon>
+    <!-- Game card -->
+    <section class="bg-[rgba(18,21,32,0.80)] border border-[#272b38] rounded-2xl p-7 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-3.5">
+      <div class="flex items-center gap-4">
+        <lucide-icon [img]="Skull" class="text-brand-red-soft w-10 h-10 stroke-[2.3px] shrink-0"></lucide-icon>
         <div>
-          <div class="card__title">PERMADEATHSMP</div>
-          <div class="card__subtitle">{{ serverStatus?.version || 'Minecraft 1.20.1 · Fabric' }}</div>
+          <div class="text-2xl font-extrabold text-brand-red tracking-widest">PERMADEATHSMP</div>
+          <div class="text-sm text-[#bcbcc7] mt-0.5">{{ serverStatus?.version || 'Minecraft 1.20.1 · Fabric' }}</div>
         </div>
       </div>
 
-      <!-- MOTD from server -->
-      <div class="card__motd" *ngIf="serverStatus?.online && serverStatus?.motd">
+      <!-- MOTD -->
+      <div *ngIf="serverStatus?.online && serverStatus?.motd"
+           class="text-sm text-[#9ca3af] bg-white/[0.03] border-l-4 border-[#374151] px-3 py-2 rounded">
         {{ serverStatus!.motd }}
       </div>
 
-      <!-- Auth gate notice -->
-      <div class="card__auth-notice" *ngIf="!isLoggedIn">
-        <lucide-icon [img]="Lock"></lucide-icon>
+      <!-- Auth notice -->
+      <div *ngIf="!isLoggedIn"
+           class="flex items-center gap-2 bg-brand-red/[0.08] border border-brand-red/25 rounded-lg px-3.5 py-2.5 text-brand-red text-sm font-semibold">
+        <lucide-icon [img]="Lock" class="w-[18px] h-[18px] shrink-0"></lucide-icon>
         Log into your Permadeath account to play.
       </div>
 
-      <!-- Downloading state -->
-      <div class="card__status card__status--dl" *ngIf="isDownloading">
-        <lucide-icon [img]="Download"></lucide-icon>
+      <!-- Downloading -->
+      <div *ngIf="isDownloading"
+           class="flex items-center gap-2.5 text-sm font-semibold px-3.5 py-2.5 rounded-lg bg-yellow-400/10 text-yellow-400 border border-yellow-400/25">
+        <lucide-icon [img]="Download" class="w-[18px] h-[18px]"></lucide-icon>
         Downloading game files…
       </div>
 
-      <!-- Running state -->
-      <div class="card__status card__status--run" *ngIf="isRunning">
-        <span class="pulse"></span>
+      <!-- Running -->
+      <div *ngIf="isRunning"
+           class="flex items-center gap-2.5 text-sm font-semibold px-3.5 py-2.5 rounded-lg bg-green-400/[0.08] text-green-400 border border-green-400/20">
+        <span class="w-2.5 h-2.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80] shrink-0 animate-pulse-dot"></span>
         Game running as <strong>{{ currentUser?.username }}</strong>
       </div>
 
       <!-- Buttons -->
-      <div class="card__actions">
-        <button
-          class="btn btn--launch"
-          [disabled]="!canLaunch"
-          (click)="launchGame()"
-          *ngIf="!isRunning && !isDownloading">
-          <lucide-icon [img]="Play"></lucide-icon>
+      <div class="flex flex-col gap-2.5 mt-1">
+        <button *ngIf="!isRunning && !isDownloading"
+                [disabled]="!canLaunch"
+                (click)="launchGame()"
+                class="flex items-center justify-center gap-2.5 text-[1.1rem] font-bold border-none rounded-xl cursor-pointer py-4 w-full bg-brand-red text-white shadow-[0_2px_16px_rgba(241,43,67,0.25)] hover:bg-[#a0182a] transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+          <lucide-icon [img]="Play" class="w-[22px] h-[22px] stroke-[2.2px]"></lucide-icon>
           {{ isLoggedIn ? 'LAUNCH PERMADEATHSMP' : 'LOG IN TO PLAY' }}
         </button>
-
-        <button class="btn btn--stop" (click)="stopGame()" *ngIf="isRunning">
-          <lucide-icon [img]="Square"></lucide-icon>
+        <button *ngIf="isRunning"
+                (click)="stopGame()"
+                class="flex items-center justify-center gap-2.5 text-[1.1rem] font-bold rounded-xl cursor-pointer py-4 w-full bg-[#1f2937] text-red-500 border-2 border-red-500/40 hover:bg-red-500/10 hover:border-red-500 transition-colors">
+          <lucide-icon [img]="Square" class="w-[22px] h-[22px] stroke-[2.2px]"></lucide-icon>
           STOP GAME
         </button>
       </div>
     </section>
 
-    <!-- ------------------------------------------------------------------- -->
-    <!-- Right: online players                                                -->
-    <!-- ------------------------------------------------------------------- -->
-    <section class="card card--players">
-      <div class="card__section-title">
-        <lucide-icon [img]="Users"></lucide-icon>
+    <!-- Players panel -->
+    <section class="bg-[rgba(18,21,32,0.80)] border border-[#272b38] rounded-2xl p-7 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-3">
+      <div class="flex items-center gap-2 text-base font-bold text-[#8ea3cf]">
+        <lucide-icon [img]="Users" class="w-5 h-5 stroke-[2px] text-brand-purple"></lucide-icon>
         Online Players
-        <span class="card__section-badge" *ngIf="serverStatus?.online">
+        <span *ngIf="serverStatus?.online"
+              class="ml-auto bg-green-400/10 text-green-400 border border-green-400/20 rounded text-xs px-2 py-0.5 font-semibold">
           {{ serverStatus!.players_online }} / {{ serverStatus!.players_max }}
         </span>
-        <span class="card__section-offline" *ngIf="serverStatus && !serverStatus.online">
-          <lucide-icon [img]="SignalLow"></lucide-icon> Offline
+        <span *ngIf="serverStatus && !serverStatus.online"
+              class="ml-auto flex items-center gap-1 text-[#6b7280] text-xs">
+          <lucide-icon [img]="SignalLow" class="w-3.5 h-3.5"></lucide-icon> Offline
         </span>
-        <span class="card__section-loading" *ngIf="!serverStatus && serverLoading">…</span>
+        <span *ngIf="!serverStatus && serverLoading" class="ml-auto text-[#6b7280] text-sm">…</span>
       </div>
 
-      <!-- Player list -->
       <ng-container *ngIf="serverStatus?.online; else serverOffline">
-        <div class="players-list" *ngIf="serverStatus!.players_online > 0; else noPlayers">
-          <div class="player-row" *ngFor="let name of serverStatus!.player_names">
-            <div class="player-avatar">
-              <img
-                [src]="'https://minotar.net/helm/' + name + '/28'"
-                [alt]="name"
-                loading="lazy"
-                onerror="this.style.display='none'" />
+        <div *ngIf="serverStatus!.players_online > 0; else noPlayers" class="flex flex-col gap-2">
+          <div *ngFor="let name of serverStatus!.player_names" class="flex items-center gap-2.5 py-1">
+            <div class="w-7 h-7 rounded overflow-hidden bg-[#1f2937] shrink-0 flex items-center justify-center">
+              <img [src]="'https://minotar.net/helm/' + name + '/28'" [alt]="name"
+                   loading="lazy" onerror="this.style.display='none'"
+                   class="w-7 h-7 [image-rendering:pixelated]" />
             </div>
-            <span class="player-name">{{ name }}</span>
-            <span class="player-badge player-badge--alive">Online</span>
+            <span class="flex-1 text-sm font-medium text-[#e5e7eb]">{{ name }}</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-green-400/10 text-green-400 border border-green-400/20">Online</span>
           </div>
-          <div class="players-extra"
-               *ngIf="serverStatus!.players_online > serverStatus!.player_names.length">
+          <div *ngIf="serverStatus!.players_online > serverStatus!.player_names.length"
+               class="text-sm text-[#6b7280] text-center pt-1">
             + {{ serverStatus!.players_online - serverStatus!.player_names.length }} more
           </div>
         </div>
         <ng-template #noPlayers>
-          <p class="players-empty">No players online right now.</p>
+          <p class="text-[#6b7280] text-sm italic">No players online right now.</p>
         </ng-template>
       </ng-container>
 
       <ng-template #serverOffline>
-        <p class="players-empty" *ngIf="serverStatus">Server is currently offline.</p>
-        <p class="players-empty" *ngIf="!serverStatus">Fetching server status…</p>
+        <p *ngIf="serverStatus" class="text-[#6b7280] text-sm italic">Server is currently offline.</p>
+        <p *ngIf="!serverStatus" class="text-[#6b7280] text-sm italic">Fetching server status…</p>
       </ng-template>
 
-      <button class="btn-refresh" (click)="refreshServerStatus()" [disabled]="serverLoading">
+      <button class="self-start border border-[#2d3748] rounded text-[#6b7280] text-xs px-3 py-1 bg-transparent cursor-pointer mt-1 hover:border-[#4b5563] hover:text-[#9ca3af] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              (click)="refreshServerStatus()" [disabled]="serverLoading">
         {{ serverLoading ? 'Refreshing…' : '↻ Refresh' }}
       </button>
     </section>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- Debug console (shown when debug_console option is on)                 -->
-  <!-- ===================================================================== -->
-  <section class="debug-console" *ngIf="showDebugConsole">
-    <div class="debug-console__header">
-      <span class="debug-console__title">
-        <lucide-icon [img]="Terminal"></lucide-icon>
+  <!-- Debug console -->
+  <section *ngIf="showDebugConsole"
+           class="bg-[#0d1117] border border-[#30363d] rounded-xl overflow-hidden w-full">
+    <div class="flex items-center justify-between px-[18px] py-2.5 bg-[#161b22] border-b border-[#30363d]">
+      <span class="flex items-center gap-2 text-[#8b949e] text-sm font-semibold">
+        <lucide-icon [img]="Terminal" class="w-4 h-4 text-blue-400"></lucide-icon>
         Game Console
       </span>
-      <button class="debug-console__clear" (click)="clearLog()">Clear</button>
+      <button class="border border-[#30363d] rounded text-[#8b949e] text-xs px-2.5 py-0.5 bg-transparent cursor-pointer hover:border-blue-400 hover:text-blue-400 transition-colors"
+              (click)="clearLog()">Clear</button>
     </div>
-    <div class="debug-console__body" #consoleLog>
-      <div
-        *ngFor="let line of logLines"
-        class="debug-console__line"
-        [class.debug-console__line--error]="line.isError">{{ line.text }}</div>
-      <div *ngIf="logLines.length === 0" class="debug-console__empty">
+    <div class="h-[220px] overflow-y-auto px-[18px] py-2.5 font-mono text-xs leading-relaxed" #consoleLog>
+      <div *ngFor="let line of logLines"
+           class="whitespace-pre-wrap break-all"
+           [class]="line.isError ? 'text-[#f85149]' : 'text-[#c9d1d9]'">{{ line.text }}</div>
+      <div *ngIf="logLines.length === 0" class="text-[#484f58] italic">
         No output yet. Launch the game to see logs here.
       </div>
     </div>
@@ -133,25 +130,26 @@
 
 </div>
 
-<!-- ======================================================================= -->
-<!-- Microsoft Auth Modal                                                     -->
-<!-- ======================================================================= -->
-<div class="auth-modal-overlay" *ngIf="showAuthModal" (click)="onAuthChoice(null)">
-  <div class="auth-modal" (click)="$event.stopPropagation()">
-    <div class="auth-modal__icon">
-      <lucide-icon [img]="Skull"></lucide-icon>
-    </div>
-    <h2 class="auth-modal__title">Minecraft Authentication</h2>
-    <p class="auth-modal__text">
+<!-- Auth modal -->
+<div *ngIf="showAuthModal"
+     class="fixed inset-0 bg-black/75 flex items-center justify-center z-[1000] backdrop-blur-sm"
+     (click)="onAuthChoice(null)">
+  <div class="bg-[#111827] border border-[#1f2937] rounded-2xl p-8 w-[420px] max-w-[90vw] flex flex-col items-center gap-4 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+       (click)="$event.stopPropagation()">
+    <lucide-icon [img]="Skull" class="text-brand-red w-11 h-11 stroke-[2.5px]"></lucide-icon>
+    <h2 class="text-xl font-bold text-white m-0">Minecraft Authentication</h2>
+    <p class="text-sm text-[#9ca3af] text-center leading-relaxed m-0">
       Do you want to log in with a <strong>Microsoft account</strong>?<br>
       Your browser will open for authentication.
     </p>
-    <div class="auth-modal__buttons">
-      <button class="auth-btn auth-btn--ms" (click)="onAuthChoice(true)">
-        <lucide-icon [img]="Globe"></lucide-icon>
+    <div class="flex flex-col gap-2.5 w-full mt-1.5">
+      <button class="flex items-center justify-center gap-2.5 py-3 rounded-xl text-base font-semibold cursor-pointer w-full border-none bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              (click)="onAuthChoice(true)">
+        <lucide-icon [img]="Globe" class="w-5 h-5"></lucide-icon>
         Yes, use Microsoft
       </button>
-      <button class="auth-btn auth-btn--offline" (click)="onAuthChoice(false)">
+      <button class="flex items-center justify-center gap-2.5 py-3 rounded-xl text-base font-semibold cursor-pointer w-full bg-[#1f2937] text-[#9ca3af] border border-[#374151] hover:bg-[#374151] hover:text-[#e5e7eb] transition-colors"
+              (click)="onAuthChoice(false)">
         Play as {{ currentUser?.username }} (Offline)
       </button>
     </div>

@@ -1,120 +1,157 @@
-<div class="dashboard-account-wrapper">
-    <h1 class="account-title">
-        <lucide-icon [img]="LogIn"></lucide-icon>
-        Account Management
-    </h1>
-    <div class="account-grid">
-        <section class="account-section account-section--left">
-            <div class="account-section__header">
-                <lucide-icon [img]="User"></lucide-icon> Cuenta
-            </div>
+<div class="w-full max-w-[1300px] mx-auto pt-11 flex flex-col gap-6 pb-6">
+  <h1 class="text-3xl font-bold text-white flex items-center gap-3.5 tracking-wide">
+    <lucide-icon [img]="LogIn" class="text-brand-purple w-8 h-8 stroke-[2.5px]"></lucide-icon>
+    Account Management
+  </h1>
 
-            <ng-container *ngIf="(user$ | async) === null; else loggedInTpl">
-                <div id="login-view">
-                    <div class="account-warning">
-                        <lucide-icon [img]="TriangleAlert"></lucide-icon>
-                        Only one account per player is allowed.
-                    </div>
-                    <form class="account-form" (ngSubmit)="onLogin()">
-                        <label class="account-label">
-                            Minecraft Username
-                            <input type="text" class="account-input" placeholder="YourUsername" [(ngModel)]="loginUsername" name="lUser" required />
-                        </label>
-                        <label class="account-label">
-                            Password
-                            <input type="password" class="account-input" placeholder="********" [(ngModel)]="loginPassword" name="lPass" required />
-                        </label>
-                        <button class="account-btn account-btn--blue" type="submit">
-                            <lucide-icon [img]="LogIn"></lucide-icon> Log In
-                        </button>
-                        <a class="account-link" (click)="openModal()">Create Account</a>
-                    </form>
-                </div>
-            </ng-container>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
 
-            <ng-template #loggedInTpl>
-                <div class="profile-card" *ngIf="user$ | async as user">
-                    <div class="profile-card__avatar">
-                        <img [src]="getAvatarUrl(user)" [alt]="user.username" class="profile-card__avatar-img" />
-                    </div>
-                    <div class="profile-card__content">
-                        <span class="profile-card__welcome">Welcome back!</span>
-                        <h2 class="profile-card__username">{{ user.username }}</h2>
-                        <div class="profile-card__badge">
-                            <span class="status-dot"></span> Active & Secure Session
-                        </div>
-                    </div>
-                    <div class="profile-card__actions">
-                        <button class="account-btn account-btn--red account-btn--outline" (click)="onLogout()">
-                            <lucide-icon [img]="LogOut"></lucide-icon> Log Out
-                        </button>
-                        <p class="profile-card__disclaimer">Death is permanent. Play carefully.</p>
-                    </div>
-                </div>
-            </ng-template>
-        </section>
+    <!-- Left: login / profile -->
+    <section class="bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl p-8 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-4 min-h-[400px]">
+      <div class="text-[1.16rem] font-bold text-[#8ea3cf] flex items-center gap-2.5 mb-2">
+        <lucide-icon [img]="User" class="w-6 h-6 stroke-[2.1px]"></lucide-icon> Cuenta
+      </div>
 
-        <section class="account-section" *ngIf="user$ | async as user; else noUserStatus">
-            <div class="account-section__header account-section__header--green">
-                <lucide-icon [img]="ShieldCheck"></lucide-icon> Account Status
-            </div>
-            <div class="account-status">
-                <div class="account-avatar">
-                    <img [src]="getAvatarUrl(user)" [alt]="user.username" class="account-avatar-img" />
-                </div>
-                <div class="account-status-info">
-                    <span class="account-status-title">Logged in as {{ user.username }}</span>
-                    <span class="account-status-desc">Statistics synced</span>
-                </div>
-                <span class="account-status-state" style="color: #4ade80;">Connected</span>
-            </div>
-            <div class="account-status-list">
-                <div class="account-status-item"><span>Player Status</span><span>{{ user.status ? 'Alive' : 'Dead' }}</span></div>
-                <div class="account-status-item"><span>Days Survived</span><span>{{ user.survived_days }}</span></div>
-                <div class="account-status-item"><span>Last Login</span><span>{{ user.last_login }}</span></div>
-                <div class="account-status-item"><span>Server Role</span><span>{{ user.server_role }}</span></div>
-            </div>
-        </section>
+      <ng-container *ngIf="(user$ | async) === null; else loggedInTpl">
+        <div class="flex items-center gap-2 bg-[#2c1016e0] rounded-xl border border-brand-red/80 text-brand-red text-[1.09rem] font-semibold px-4 py-3 mb-2">
+          <lucide-icon [img]="TriangleAlert" class="text-brand-red w-5 h-5"></lucide-icon>
+          Only one account per player is allowed.
+        </div>
+        <form class="flex flex-col gap-3.5 mt-1" (ngSubmit)="onLogin()">
+          <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1.5">
+            Minecraft Username
+            <input type="text" class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-4 py-2.5 outline-none font-medium w-full shadow-sm mt-0.5"
+                   placeholder="YourUsername" [(ngModel)]="loginUsername" name="lUser" required />
+          </label>
+          <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1.5">
+            Password
+            <input type="password" class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-4 py-2.5 outline-none font-medium w-full shadow-sm mt-0.5"
+                   placeholder="********" [(ngModel)]="loginPassword" name="lPass" required />
+          </label>
+          <button class="flex items-center justify-center gap-2 text-[1.07rem] font-semibold rounded-xl border-none cursor-pointer py-3 mt-3 w-full bg-blue-600 text-white border-[1.5px] border-blue-600 hover:bg-blue-800 transition-colors shadow-md"
+                  type="submit">
+            <lucide-icon [img]="LogIn" class="text-white w-5 h-5 stroke-[2.2px]"></lucide-icon> Log In
+          </button>
+          <a class="text-blue-500 text-sm font-medium mt-1.5 no-underline cursor-pointer hover:text-blue-800 transition-colors"
+             (click)="openModal()">Create Account</a>
+        </form>
+      </ng-container>
 
-        <ng-template #noUserStatus>
-            <section class="account-section">
-                <div class="account-section__header account-section__header--green">
-                    <lucide-icon [img]="ShieldCheck"></lucide-icon> Account Status
-                </div>
-                <div class="account-status">
-                    <div class="account-avatar"><lucide-icon [img]="User"></lucide-icon></div>
-                    <div class="account-status-info">
-                        <span class="account-status-title">Not logged in</span>
-                        <span class="account-status-desc">Log in to see your statistics</span>
-                    </div>
-                    <span class="account-status-state">Disconnected</span>
-                </div>
-                <div class="account-status-list">
-                    <div class="account-status-item"><span>Player Status</span><span>--</span></div>
-                    <div class="account-status-item"><span>Days Survived</span><span>--</span></div>
-                    <div class="account-status-item"><span>Last Login</span><span>Never</span></div>
-                    <div class="account-status-item"><span>Server Role</span><span>--</span></div>
-                </div>
-            </section>
-        </ng-template>
-    </div>
+      <ng-template #loggedInTpl>
+        <div class="flex-1 flex flex-col items-center justify-center text-center p-4 bg-gradient-to-b from-white/[0.02] to-transparent rounded-xl border border-white/[0.05]"
+             *ngIf="user$ | async as user">
+          <div class="w-[100px] h-[100px] bg-blue-500/10 border-2 border-blue-500/30 rounded-xl flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(59,130,246,0.1)] overflow-hidden">
+            <img [src]="getAvatarUrl(user)" [alt]="user.username"
+                 class="w-full h-full object-cover [image-rendering:pixelated] rounded-xl" />
+          </div>
+          <div class="mb-8">
+            <span class="block text-sm text-[#9ca3af] mb-1">Welcome back!</span>
+            <h2 class="m-0 text-[1.75rem] font-bold text-white tracking-tight">{{ user.username }}</h2>
+            <div class="inline-flex items-center gap-2 mt-3 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-sm text-green-400">
+              <span class="w-2 h-2 bg-green-400 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.5)]"></span>
+              Active &amp; Secure Session
+            </div>
+          </div>
+          <div class="w-full flex flex-col items-center gap-4">
+            <button class="flex items-center justify-center gap-2 text-[1.07rem] font-semibold rounded-xl bg-transparent border-2 border-red-500/50 text-red-400 px-8 py-3 cursor-pointer hover:bg-red-500/10 hover:border-red-500 transition-colors"
+                    (click)="onLogout()">
+              <lucide-icon [img]="LogOut" class="w-5 h-5 stroke-[2.2px]"></lucide-icon> Log Out
+            </button>
+            <p class="text-xs text-[#6b7280] m-0">Death is permanent. Play carefully.</p>
+          </div>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- Right: status -->
+    <ng-container *ngIf="user$ | async as user; else noUserStatus">
+      <section class="bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl p-8 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-4">
+        <div class="text-[1.16rem] font-bold text-brand-cyan flex items-center gap-2.5 mb-2">
+          <lucide-icon [img]="ShieldCheck" class="w-6 h-6 stroke-[2.1px]"></lucide-icon> Account Status
+        </div>
+        <div class="flex items-center gap-4 mb-2 mt-1.5">
+          <div class="bg-[#232b3899] rounded-xl w-16 h-16 flex items-center justify-center overflow-hidden shrink-0">
+            <img [src]="getAvatarUrl(user)" [alt]="user.username"
+                 class="w-full h-full object-cover [image-rendering:pixelated]" />
+          </div>
+          <div class="flex flex-col gap-0.5">
+            <span class="text-[1.19rem] font-bold text-white">Logged in as {{ user.username }}</span>
+            <span class="text-[1.03rem] text-[#bcbcc7]">Statistics synced</span>
+          </div>
+          <span class="ml-auto bg-[#232b3899] text-green-400 rounded-lg text-[1.01rem] font-semibold px-3.5 py-1.5">Connected</span>
+        </div>
+        <div class="flex flex-col gap-4 mb-1.5">
+          <div *ngFor="let item of [
+            ['Player Status', user.status ? 'Alive' : 'Dead'],
+            ['Days Survived', user.survived_days],
+            ['Last Login', user.last_login],
+            ['Server Role', user.server_role]
+          ]" class="flex items-center justify-between text-[1.07rem] text-[#bcbcc7] font-medium py-0.5">
+            <span>{{ item[0] }}</span><span>{{ item[1] }}</span>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-template #noUserStatus>
+      <section class="bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl p-8 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-4">
+        <div class="text-[1.16rem] font-bold text-brand-cyan flex items-center gap-2.5 mb-2">
+          <lucide-icon [img]="ShieldCheck" class="w-6 h-6 stroke-[2.1px]"></lucide-icon> Account Status
+        </div>
+        <div class="flex items-center gap-4 mb-2 mt-1.5">
+          <div class="bg-[#232b3899] rounded-xl w-16 h-16 flex items-center justify-center shrink-0">
+            <lucide-icon [img]="User" class="text-[#bcbcc7] w-9 h-9 stroke-[2.2px]"></lucide-icon>
+          </div>
+          <div class="flex flex-col gap-0.5">
+            <span class="text-[1.19rem] font-bold text-white">Not logged in</span>
+            <span class="text-[1.03rem] text-[#bcbcc7]">Log in to see your statistics</span>
+          </div>
+          <span class="ml-auto bg-[#232b3899] text-[#bcbcc7] rounded-lg text-[1.01rem] font-semibold px-3.5 py-1.5">Disconnected</span>
+        </div>
+        <div class="flex flex-col gap-4 mb-1.5">
+          <div *ngFor="let item of [['Player Status','--'],['Days Survived','--'],['Last Login','Never'],['Server Role','--']]"
+               class="flex items-center justify-between text-[1.07rem] text-[#bcbcc7] font-medium py-0.5">
+            <span>{{ item[0] }}</span><span>{{ item[1] }}</span>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+  </div>
 </div>
 
-<div class="modal-overlay" *ngIf="showRegisterModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Create Account</h2>
-            <button class="modal-close-btn" (click)="closeModal()">&times;</button>
-        </div>
-        <form class="modal-body" (ngSubmit)="onRegister()">
-            <label class="account-label">Username <input type="text" class="account-input" [(ngModel)]="regUsername" name="rUser" required /></label>
-            <label class="account-label">Password <input type="password" class="account-input" [(ngModel)]="regPassword" name="rPass" required /></label>
-            <label class="account-label">Confirm <input type="password" class="account-input" [(ngModel)]="regConfirm" name="rConf" required /></label>
-            <label class="account-label">Code <input type="text" class="account-input" [(ngModel)]="regCode" name="rCode" required /></label>
-            <div class="modal-footer">
-                <button type="button" class="account-btn account-btn--secondary" (click)="closeModal()">Cancel</button>
-                <button type="submit" class="account-btn account-btn--blue">Create</button>
-            </div>
-        </form>
+<!-- Register modal -->
+<div *ngIf="showRegisterModal"
+     class="fixed inset-0 bg-black/70 flex justify-center items-center z-[1000] backdrop-blur-sm">
+  <div class="bg-[#1a1a21] p-6 rounded-xl w-[90%] max-w-[500px] border border-[#333] shadow-[0_5px_15px_rgba(0,0,0,0.5)] text-white">
+    <div class="flex justify-between items-center border-b border-[#333] pb-4 mb-4">
+      <h2 class="m-0 text-2xl text-white">Create Account</h2>
+      <button class="bg-transparent border-none text-3xl text-[#888] cursor-pointer p-0 leading-none"
+              (click)="closeModal()">&times;</button>
     </div>
+    <form class="flex flex-col gap-4" (ngSubmit)="onRegister()">
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1.5">Username
+        <input type="text" class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-4 py-2.5 outline-none font-medium w-full mt-0.5"
+               [(ngModel)]="regUsername" name="rUser" required />
+      </label>
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1.5">Password
+        <input type="password" class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-4 py-2.5 outline-none font-medium w-full mt-0.5"
+               [(ngModel)]="regPassword" name="rPass" required />
+      </label>
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1.5">Confirm
+        <input type="password" class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-4 py-2.5 outline-none font-medium w-full mt-0.5"
+               [(ngModel)]="regConfirm" name="rConf" required />
+      </label>
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1.5">Code
+        <input type="text" class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-4 py-2.5 outline-none font-medium w-full mt-0.5"
+               [(ngModel)]="regCode" name="rCode" required />
+      </label>
+      <div class="flex justify-end gap-3 mt-6">
+        <button type="button"
+                class="bg-white text-black border-none px-4 py-2 rounded-lg cursor-pointer font-semibold hover:bg-[#92929b] transition-colors"
+                (click)="closeModal()">Cancel</button>
+        <button type="submit"
+                class="flex items-center justify-center gap-2 font-semibold rounded-lg border-none cursor-pointer px-4 py-2 bg-blue-600 text-white hover:bg-blue-800 transition-colors">Create</button>
+      </div>
+    </form>
+  </div>
 </div>

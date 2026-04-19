@@ -1,22 +1,30 @@
-<div class="cw-root">
-  <div class="cw-header">
-    <span class="cw-title">
-      <lucide-icon [img]="Skull"></lucide-icon>
+<div class="flex flex-col h-screen">
+  <div class="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-[#30363d] shrink-0">
+    <span class="flex items-center gap-2 text-brand-red text-sm font-bold tracking-wide">
+      <lucide-icon [img]="Skull" class="w-[18px] h-[18px]"></lucide-icon>
       PERMADEATHSMP — Game Console
     </span>
-    <div class="cw-header-right">
-      <span class="cw-status" [class.cw-status--running]="isRunning" [class.cw-status--stopped]="!isRunning">
+    <div class="flex items-center gap-2.5">
+      <span class="text-xs font-semibold px-2.5 py-0.5 rounded"
+            [class]="isRunning
+              ? 'bg-green-400/10 text-green-400 border border-green-400/30'
+              : 'bg-gray-400/10 text-gray-400 border border-[#374151]'">
         {{ isRunning ? 'Running' : (exitCode !== null && exitCode !== 0 ? '⚠ Crashed (code ' + exitCode + ')' : 'Stopped') }}
       </span>
-      <button class="cw-btn cw-btn--clear" (click)="clearLog()">Clear</button>
-      <button class="cw-btn cw-btn--stop" *ngIf="isRunning" (click)="stopGame()">
-        <lucide-icon [img]="Square"></lucide-icon> Stop
+      <button class="flex items-center gap-1 border border-[#30363d] rounded text-[#8b949e] text-xs px-2.5 py-0.5 bg-transparent cursor-pointer hover:border-blue-400 hover:text-blue-400 transition-colors"
+              (click)="clearLog()">Clear</button>
+      <button *ngIf="isRunning"
+              class="flex items-center gap-1 border border-red-500/40 rounded text-red-400 text-xs px-2.5 py-0.5 bg-transparent cursor-pointer hover:border-red-500 hover:bg-red-500/10 transition-colors"
+              (click)="stopGame()">
+        <lucide-icon [img]="Square" class="w-3.5 h-3.5"></lucide-icon> Stop
       </button>
     </div>
   </div>
 
-  <div class="cw-body" #consoleEl>
-    <div *ngFor="let line of logLines" class="cw-line" [class.cw-line--error]="line.isError">{{ line.text }}</div>
-    <div *ngIf="logLines.length === 0" class="cw-empty">Waiting for game output…</div>
+  <div class="flex-1 overflow-y-auto px-3.5 py-2.5 font-mono text-xs leading-relaxed" #consoleEl>
+    <div *ngFor="let line of logLines"
+         class="whitespace-pre-wrap break-all"
+         [class]="line.isError ? 'text-[#f85149]' : 'text-[#c9d1d9]'">{{ line.text }}</div>
+    <div *ngIf="logLines.length === 0" class="text-[#484f58] italic">Waiting for game output…</div>
   </div>
 </div>

@@ -1,79 +1,79 @@
-<div class="dashboard-config-wrapper" *ngIf="tauri.options">
-  <h1 class="config-title">
-    <lucide-icon [img]="Settings"></lucide-icon>
+<div class="w-full max-w-[1200px] mx-auto pt-5 px-6 flex flex-col items-start pb-6" *ngIf="tauri.options">
+  <h1 class="text-3xl font-bold text-white flex items-center gap-3.5 mb-6 tracking-wide">
+    <lucide-icon [img]="Settings" class="text-white w-8 h-8 stroke-[2.2px]"></lucide-icon>
     Launcher Settings
   </h1>
-  <form class="config-grid" (ngSubmit)="saveConfig()">
-    <!-- General launcher section -->
-    <section class="config-section">
-      <div class="config-section__header">
-        <lucide-icon [img]="Settings"></lucide-icon>
+
+  <form class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full" (ngSubmit)="saveConfig()">
+
+    <!-- General -->
+    <section class="bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl px-6 py-6 shadow-[0_2px_18px_0_#0000002c] flex flex-col gap-4 min-w-0">
+      <div class="text-[1.17rem] font-bold text-[#8ea3cf] flex items-center gap-2.5 mb-3 tracking-wide">
+        <lucide-icon [img]="Settings" class="w-6 h-6 stroke-[2.1px]"></lucide-icon>
         General
       </div>
-      <div class="config-row">
-        <label class="config-label">
-          Auto-launch
-          <div class="config-inputs">
-            <span class="config-desc">Launch the game automatically on startup</span>
-            <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.init_on_start" name="init_on_start" id="auto_init" />
-            <span class="switch"></span>
-          </div>
-        </label>
-      </div>
-      <div class="config-row">
-        <label class="config-label">
-          Show debug console
-          <div class="config-inputs">
-            <span class="config-desc">When the game opens, show the console</span>
-            <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.debug_console" name="debug_console" id="debug_console" />
-            <span class="switch"></span>
-          </div>
-        </label>
-      </div>
-      <div class="config-row">
-        <label class="config-label">
-          Hide launcher on launch
-          <div class="config-inputs">
-            <span class="config-desc">Hide the launcher window while the game is running</span>
-            <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.close_on_launch" name="close_on_launch" id="close_on_launch" />
-            <span class="switch"></span>
-          </div>
-        </label>
-      </div>
+
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-0.5 mb-2">
+        Auto-launch
+        <div class="flex justify-between items-center w-full mt-0.5">
+          <span class="text-[#bcbcc7] text-[0.97rem] font-normal">Launch the game automatically on startup</span>
+          <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.init_on_start" name="init_on_start" />
+          <span class="switch"></span>
+        </div>
+      </label>
+
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-0.5 mb-2">
+        Show debug console
+        <div class="flex justify-between items-center w-full mt-0.5">
+          <span class="text-[#bcbcc7] text-[0.97rem] font-normal">When the game opens, show the console</span>
+          <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.debug_console" name="debug_console" />
+          <span class="switch"></span>
+        </div>
+      </label>
+
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-0.5 mb-2">
+        Hide launcher on launch
+        <div class="flex justify-between items-center w-full mt-0.5">
+          <span class="text-[#bcbcc7] text-[0.97rem] font-normal">Hide the launcher window while the game is running</span>
+          <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.close_on_launch" name="close_on_launch" />
+          <span class="switch"></span>
+        </div>
+      </label>
     </section>
 
-    <!-- Game options section -->
-    <section class="config-section">
-      <div class="config-section__header config-section__header--yellow">
-        <lucide-icon [img]="Gamepad2"></lucide-icon>
+    <!-- Game -->
+    <section class="bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl px-6 py-6 shadow-[0_2px_18px_0_#0000002c] flex flex-col gap-4 min-w-0">
+      <div class="text-[1.17rem] font-bold text-brand-yellow flex items-center gap-2.5 mb-3 tracking-wide">
+        <lucide-icon [img]="Gamepad2" class="w-6 h-6 stroke-[2.1px]"></lucide-icon>
         Game
       </div>
-      <div class="config-row">
-        <label class="config-label">
-          Game directory
-          <div class="config-inputs">
-            <div class="input-group">
-              <input type="text" class="input-text" [value]="tauri.options.game_dir || '%APPDATA%/.Permadeath'" readonly />
-              <button class="btn btn--light" type="button" (click)="changeGameDir()">Change</button>
-            </div>
-          </div>
-        </label>
-      </div>
-      <div class="config-row">
-        <label class="config-label">
-          Automatic backup
-          <div class="config-inputs">
-            <span class="config-desc">Configuration backup</span>
-            <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.automatic_backup" name="automatic_backup" id="automatic_backup" />
-            <span class="switch"></span>
-          </div>
-        </label>
-      </div>
+
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-0.5 mb-2">
+        Game directory
+        <div class="flex items-center gap-2 mt-1.5 w-full">
+          <input type="text" class="bg-[#232b38] text-white border-none rounded-lg text-[1.03rem] px-3 py-2 outline-none font-medium flex-1 min-w-0 shadow-sm"
+                 [value]="tauri.options.game_dir || '%APPDATA%/.Permadeath'" readonly />
+          <button class="border-none rounded-lg text-[1.04rem] px-5 py-2 font-semibold cursor-pointer bg-white text-[#222] border border-[#e0e0e0] hover:bg-[#eee] transition-colors shrink-0"
+                  type="button" (click)="changeGameDir()">Change</button>
+        </div>
+      </label>
+
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-0.5 mb-2">
+        Automatic backup
+        <div class="flex justify-between items-center w-full mt-0.5">
+          <span class="text-[#bcbcc7] text-[0.97rem] font-normal">Configuration backup</span>
+          <input type="checkbox" class="switch-input" [(ngModel)]="tauri.options.automatic_backup" name="automatic_backup" />
+          <span class="switch"></span>
+        </div>
+      </label>
     </section>
 
-    <div class="config-footer">
-      <button class="btn btn--light" type="button" (click)="resetConfig()">Reset</button>
-      <button class="btn btn--red" type="submit">Save Changes</button>
+    <!-- Footer buttons -->
+    <div class="md:col-span-2 flex justify-end gap-4 mt-6">
+      <button class="border-none rounded-lg text-[1.04rem] px-5 py-2 font-semibold cursor-pointer bg-white text-[#222] border border-[#e0e0e0] hover:bg-[#eee] transition-colors"
+              type="button" (click)="resetConfig()">Reset</button>
+      <button class="border-none rounded-lg text-[1.04rem] px-5 py-2 font-semibold cursor-pointer bg-brand-red text-white shadow-[0_2px_10px_0_#f12b4340] hover:bg-[#a0182a] transition-colors"
+              type="submit">Save Changes</button>
     </div>
   </form>
 </div>

@@ -1,92 +1,85 @@
-<div class="dashboard-vm-wrapper" *ngIf="tauri.gameOptions">
-  <h1 class="vm-title">
-    <lucide-icon [img]="Zap"></lucide-icon>
+<div class="w-full max-w-[1400px] mx-auto pt-10 flex flex-col pb-6" *ngIf="tauri.gameOptions">
+  <h1 class="text-3xl font-bold text-white flex items-center gap-3 mb-7 tracking-wide">
+    <lucide-icon [img]="Zap" class="text-brand-yellow w-8 h-8 stroke-[2.5px]"></lucide-icon>
     Java VM Configuration
   </h1>
 
-  <div class="vm-alert vm-alert--yellow">
-    <lucide-icon [img]="Info"></lucide-icon>
-    <span>
-      PERMADEATHSMP requires specific Java settings to handle the mod's complex mechanics.
-      Incorrect changes may affect performance.
-    </span>
+  <div class="flex items-center gap-3.5 bg-[rgba(218,174,37,0.13)] border border-brand-yellow rounded-xl text-brand-yellow font-semibold text-[1.12rem] px-7 py-4 mb-2.5">
+    <lucide-icon [img]="Info" class="w-7 h-7 stroke-[2.1px] text-brand-yellow shrink-0"></lucide-icon>
+    <span>PERMADEATHSMP requires specific Java settings to handle the mod's complex mechanics.
+      Incorrect changes may affect performance.</span>
   </div>
 
-  <form class="vm-grid" (ngSubmit)="saveVmOptions()">
-    <!-- Memory allocated to the game -->
-    <section class="vm-section">
-      <div class="vm-section__header">
-        <lucide-icon [img]="MemoryStick"></lucide-icon> Memory
+  <form class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mt-0" (ngSubmit)="saveVmOptions()">
+
+    <!-- Memory -->
+    <section class="bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl px-6 pt-7 pb-5 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-4 min-w-0">
+      <div class="text-[1.19rem] font-bold text-[#8ea3cf] flex items-center gap-3 mb-3 tracking-wide">
+        <lucide-icon [img]="MemoryStick" class="w-6 h-6 stroke-[2.2px]"></lucide-icon> Memory
       </div>
-      <div class="vm-row">
-        <label class="vm-label">
-          Allocated Memory
-          <input type="text" class="vm-input" [(ngModel)]="maxRamStr" name="maxRam" />
-        </label>
-      </div>
-      <div class="vm-row">
-        <div class="vm-recommendation">
-          <lucide-icon [img]="Info"></lucide-icon>
-          <span>
-            <strong>Recommendation</strong><br>
-            PERMADEATHSMP recommends at least 4 GB due to the modded mobs and transformed dimensions.
-          </span>
-        </div>
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1">
+        Allocated Memory
+        <input type="text" class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-3 py-2 mt-1.5 outline-none font-medium w-full max-w-[350px] shadow-sm"
+               [(ngModel)]="maxRamStr" name="maxRam" />
+      </label>
+      <div class="bg-[#232b68cc] rounded-xl px-4 py-3 text-[#a2bcff] text-[1.01rem] font-medium flex items-start gap-2.5 mt-1.5">
+        <lucide-icon [img]="Info" class="text-[#8ea3cf] w-[22px] h-[22px] stroke-[2px] shrink-0 mt-0.5"></lucide-icon>
+        <span><strong>Recommendation</strong><br>
+          PERMADEATHSMP recommends at least 4 GB due to the modded mobs and transformed dimensions.</span>
       </div>
     </section>
 
-    <!-- Garbage collector and Java version selection -->
-    <section class="vm-section">
-      <div class="vm-section__header vm-section__header--green">
-        <lucide-icon [img]="Gauge"></lucide-icon> Performance
+    <!-- Performance -->
+    <section class="bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl px-6 pt-7 pb-5 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-4 min-w-0">
+      <div class="text-[1.19rem] font-bold text-brand-cyan flex items-center gap-3 mb-3 tracking-wide">
+        <lucide-icon [img]="Gauge" class="w-6 h-6 stroke-[2.2px]"></lucide-icon> Performance
       </div>
-      <div class="vm-row">
-        <label class="vm-label">
-          Garbage Collector
-          <select class="vm-select" [(ngModel)]="tauri.gameOptions.garbage_collector" name="gc">
-            <option *ngFor="let gc of gcOptions" [value]="gc">{{ gc }}</option>
-          </select>
-        </label>
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1">
+        Garbage Collector
+        <select class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-3 py-2 mt-1.5 outline-none font-medium w-full max-w-[350px] shadow-sm appearance-none"
+                [(ngModel)]="tauri.gameOptions.garbage_collector" name="gc">
+          <option *ngFor="let gc of gcOptions" [value]="gc">{{ gc }}</option>
+        </select>
+      </label>
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1">
+        Java Version
+        <select class="bg-[#232b38] text-white border-none rounded-lg text-[1.05rem] px-3 py-2 mt-1.5 outline-none font-medium w-full max-w-[350px] shadow-sm appearance-none"
+                [(ngModel)]="tauri.gameOptions.custom_java_path" name="javaVersion">
+          <option *ngFor="let ver of javaVersions" [value]="ver">{{ ver }}</option>
+        </select>
+      </label>
+    </section>
+
+    <!-- JVM Arguments (full width) -->
+    <section class="md:col-span-2 bg-[rgba(18,21,32,0.80)] border-2 border-[#272b38] rounded-2xl px-6 pt-7 pb-5 shadow-[0_2px_18px_0_#0000001f] flex flex-col gap-4 min-w-0">
+      <div class="text-[1.19rem] font-bold text-[#8ea3cf] flex items-center gap-3 mb-3 tracking-wide">
+        <lucide-icon [img]="Zap" class="w-6 h-6 stroke-[2.2px]"></lucide-icon> JVM Arguments
       </div>
-      <div class="vm-row">
-        <label class="vm-label">
-          Java Version
-          <select class="vm-select" [(ngModel)]="tauri.gameOptions.custom_java_path" name="javaVersion">
-            <option *ngFor="let ver of javaVersions" [value]="ver">{{ ver }}</option>
-          </select>
-        </label>
+      <label class="text-white text-[1.07rem] font-medium flex flex-col gap-1">
+        Additional arguments
+        <textarea class="bg-[#232b38] text-white border-none rounded-lg text-[1.02rem] px-4 py-2.5 mt-1.5 outline-none font-medium w-full resize-none shadow-sm"
+                  rows="2" [(ngModel)]="jvmArgsStr" name="args"></textarea>
+      </label>
+      <div class="flex justify-center my-2">
+        <button type="button"
+                class="border-none rounded-lg text-[1.04rem] px-6 py-2 font-bold cursor-pointer bg-white text-[#222] border border-[#e0e0e0] hover:bg-[#eee] transition-colors"
+                (click)="resetDefaults()">Reset to Defaults</button>
+      </div>
+      <div class="bg-[#2c1016e0] rounded-xl px-4 py-3 text-brand-red text-[1.01rem] font-medium flex items-start gap-2.5 border border-brand-red mt-2">
+        <lucide-icon [img]="TriangleAlert" class="text-brand-red w-[22px] h-[22px] stroke-[2px] shrink-0 mt-0.5"></lucide-icon>
+        <span><strong>Critical Settings</strong><br>
+          Incorrect JVM arguments can cause instability or crashes. Make sure you understand each change.
+          Default values are optimized for maximum game performance.
+          These values are optimized for multiplayer.</span>
       </div>
     </section>
 
-    <!-- Custom JVM arguments -->
-    <section class="vm-section vm-section--full">
-      <div class="vm-section__header">
-        <lucide-icon [img]="Zap"></lucide-icon> JVM Arguments
-      </div>
-      <div class="vm-row">
-        <label class="vm-label">
-          Additional arguments
-          <textarea class="vm-textarea" rows="2" [(ngModel)]="jvmArgsStr" name="args"></textarea>
-        </label>
-      </div>
-      <div class="vm-row vm-row--buttons">
-        <button type="button" class="vm-btn vm-btn--white" (click)="resetDefaults()">Reset to Defaults</button>
-      </div>
-      <div class="vm-row">
-        <div class="vm-critical">
-          <lucide-icon [img]="TriangleAlert"></lucide-icon>
-          <span>
-            <strong>Critical Settings</strong><br>
-            Incorrect JVM arguments can cause instability or crashes. Make sure you understand each change.
-            Default values are optimized for maximum game performance.
-            These values are optimized for multiplayer.
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <div class="vm-footer">
-      <button type="submit" class="vm-btn vm-btn--orange">Apply Changes</button>
+    <!-- Footer -->
+    <div class="md:col-span-2 flex justify-end gap-4 mt-6 mb-5">
+      <button type="submit"
+              class="border-none rounded-lg text-[1.04rem] px-6 py-2 font-bold cursor-pointer bg-[#f7a700] text-white shadow-[0_2px_10px_0_#f7a70040] hover:bg-[#b47611] transition-colors">
+        Apply Changes
+      </button>
     </div>
   </form>
 </div>

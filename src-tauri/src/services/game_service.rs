@@ -2,12 +2,41 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use std::sync::{Arc, Mutex};
 use log::{info, warn, error};
-use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder, WebviewUrl};
+use tauri::{AppHandle, Emitter, Manager, PhysicalPosition, PhysicalSize, WebviewWindow, WebviewWindowBuilder, WebviewUrl};
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::sync::oneshot;
 
 use crate::models::options::LauncherOptions;
 use crate::services::options_repository::OptionsRepository;
+
+/// Saved window state: (fullscreen, maximized, size, position)
+type SavedWindowState = Option<(bool, bool, Option<PhysicalSize<u32>>, Option<PhysicalPosition<i32>>)>;
+
+/// Restores the main window to its previous state after the game exits.
+async fn restore_window(w: &WebviewWindow, state: &SavedWindowState) {
+    let _ = w.show();
+    let _ = w.unminimize();
+
+    // Give the window manager time to process show + unminimize
+    tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+
+    if let Some((was_fullscreen, was_maximized, size, pos)) = state {
+        if let Some(s) = size {
+            let _ = w.set_size(*s);
+        }
+        if let Some(p) = pos {
+            let _ = w.set_position(*p);
+        }
+        if *was_maximized {
+            let _ = w.maximize();
+        }
+        if *was_fullscreen {
+            let _ = w.set_fullscreen(true);
+        }
+    }
+
+    let _ = w.set_focus();
+}
 
 // ---------------------------------------------------------------------------
 // Public types
@@ -301,7 +330,8 @@ impl GameManager {
         // close + debug  → open mini console window, hide main
         // close + !debug → hide main window, no console
         // !close + *     → keep main window open (console visible if debug is on)
-        if close_launcher {
+        // Save the main window state before hiding so we can restore it exactly.
+        let saved_window_state = if close_launcher {
             if show_debug {
                 // Open a dedicated console window
                 if let Err(e) = WebviewWindowBuilder::new(
@@ -331,11 +361,20 @@ impl GameManager {
                 }
             }
             if let Some(win) = app.get_webview_window("main") {
-                let _ = win.set_fullscreen(false);
+                let fs = win.is_fullscreen().unwrap_or(false);
+                let maximized = win.is_maximized().unwrap_or(false);
+                let size = win.inner_size().ok();
+                let pos = win.outer_position().ok();
+                info!("Saving window state before hide: fullscreen={}, maximized={}, size={:?}, pos={:?}", fs, maximized, size, pos);
                 let _ = win.minimize();
                 let _ = win.hide();
+                Some((fs, maximized, size, pos))
+            } else {
+                None
             }
-        }
+        } else {
+            None
+        };
 
         // Wait task
         let state_arc   = Arc::clone(&self.state);
@@ -355,11 +394,8 @@ impl GameManager {
                     let _ = app.emit("game-exited", code);
                     if close_launcher {
                         if let Some(w) = app.get_webview_window("console") { let _ = w.close(); }
-                        if let Some(w) = app.get_webview_window("main")    {
-                            let _ = w.set_fullscreen(true);
-                            let _ = w.unminimize();
-                            let _ = w.show();
-                            let _ = w.set_focus();
+                        if let Some(w) = app.get_webview_window("main") {
+                            restore_window(&w, &saved_window_state).await;
                         }
                     }
                 },
@@ -373,11 +409,8 @@ impl GameManager {
                     let _ = app.emit("game-exited", -1i32);
                     if close_launcher {
                         if let Some(w) = app.get_webview_window("console") { let _ = w.close(); }
-                        if let Some(w) = app.get_webview_window("main")    {
-                            let _ = w.set_fullscreen(true);
-                            let _ = w.unminimize();
-                            let _ = w.show();
-                            let _ = w.set_focus();
+                        if let Some(w) = app.get_webview_window("main") {
+                            restore_window(&w, &saved_window_state).await;
                         }
                     }
                 }

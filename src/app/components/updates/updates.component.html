@@ -1,89 +1,104 @@
-<div class="dashboard-updates-wrapper" *ngIf="tauri.options">
-  <div class="updates-title-row">
-    <h1 class="updates-title">
-      <lucide-icon [img]="Download"></lucide-icon>
+<div class="w-full max-w-[900px] mx-auto pt-12 flex flex-col gap-7 pb-6" *ngIf="tauri.options">
+
+  <!-- Title row -->
+  <div class="flex items-center justify-between gap-6">
+    <h1 class="text-3xl font-bold text-white flex items-center gap-3.5 tracking-wide">
+      <lucide-icon [img]="Download" class="text-brand-blue w-8 h-8 stroke-[2.2px]"></lucide-icon>
       Updates
     </h1>
-    <button class="updates-btn updates-btn--blue" type="button">
-      <lucide-icon [img]="RefreshCw"></lucide-icon>
+    <button class="inline-flex items-center gap-2 text-[1.03rem] font-semibold rounded-xl border-none cursor-pointer px-5 py-2.5 bg-blue-600 text-white border border-blue-600 hover:bg-blue-800 transition-colors shadow-md"
+            type="button">
+      <lucide-icon [img]="RefreshCw" class="w-5 h-5"></lucide-icon>
       Check for Updates
     </button>
   </div>
 
-  <div class="updates-mod-card">
-    <div>
-      <span class="mod-title">PERMADEATHSMP Mod</span>
-      <span class="mod-version">Current version: v2.1.2</span>
-      <span class="mod-check">Last checked: 2 hours ago</span>
+  <!-- Mod card -->
+  <div class="bg-gradient-to-r from-[#33204d] to-[#241e34] border-2 border-[#33204d] rounded-2xl text-white px-8 py-5 flex items-center justify-between gap-5">
+    <div class="flex flex-col gap-1">
+      <span class="text-[1.22rem] font-bold text-[#a2bcff] mb-1 block">PERMADEATHSMP Mod</span>
+      <span class="text-[#bcbcc7] text-[1.01rem] block">Current version: v2.1.2</span>
+      <span class="text-[#bcbcc7] text-[1.01rem] block">Last checked: 2 hours ago</span>
     </div>
-    <div class="updates-mod-status">
-      <span class="updates-status-icon"><lucide-icon [img]="AlertCircle"></lucide-icon></span>
-      <span class="updates-status-label">Update Available</span>
+    <div class="flex items-center gap-2 ml-4 bg-[#2d1e0c] rounded-xl px-4 py-1.5 border-2 border-[#f7a700]">
+      <lucide-icon [img]="AlertCircle" class="text-[#f7a700] w-[22px] h-[22px] stroke-[2.3px]"></lucide-icon>
+      <span class="text-[#f7a700] text-[1.09rem] font-bold ml-0.5">Update Available</span>
     </div>
   </div>
 
-  <div class="updates-update-card">
-    <div class="update-header-row">
-      <span class="update-header">
-        <lucide-icon [img]="Download"></lucide-icon>
+  <!-- Update card -->
+  <div class="bg-[rgba(18,21,32,0.90)] border-2 border-[#232b38] rounded-2xl text-white px-8 py-5 flex flex-col gap-2">
+    <div class="flex items-center justify-between mb-1">
+      <span class="text-[1.17rem] font-bold text-brand-cyan flex items-center gap-2">
+        <lucide-icon [img]="Download" class="text-brand-cyan w-[22px] h-[22px] stroke-[2.1px]"></lucide-icon>
         Update Available
       </span>
-      <span class="update-label-new">New</span>
+      <span class="bg-[#169a7c] text-white text-sm font-bold rounded-lg px-3.5 py-0.5">New</span>
     </div>
-    <div class="update-main-row">
+    <div class="flex items-center justify-between gap-4 mb-1">
       <div>
-        <span class="update-version-n">v2.1.3</span>
-        <span class="update-version-highlight"> - Critical Improvements</span>
-        <span class="update-date">December 15, 2024 · 45.2 MB</span>
+        <span class="text-brand-cyan font-bold text-[1.19rem]">v2.1.3</span>
+        <span class="text-[#82ffb7] font-bold text-[1.19rem]"> - Critical Improvements</span>
+        <span class="text-[#bcbcc7] text-[0.97rem] ml-1.5">December 15, 2024 · 45.2 MB</span>
       </div>
-      <button class="updates-btn updates-btn--green" type="button">
-        <lucide-icon [img]="Download"></lucide-icon>
+      <button class="inline-flex items-center gap-2 font-bold rounded-xl border-none cursor-pointer px-5 py-2.5 bg-brand-cyan text-white border border-brand-cyan hover:bg-[#169a7c] transition-colors shadow-md min-w-[148px] text-[1.13rem]"
+              type="button">
+        <lucide-icon [img]="Download" class="w-5 h-5"></lucide-icon>
         Download
       </button>
     </div>
-    <div class="update-desc">
+    <div class="text-white text-[1.09rem] mb-1 mt-1">
       Improvements to the Class Skeletons system, bug fixes in Ultra Ravagers
     </div>
-    <div class="update-news">
-      <span class="update-news-title">What's new:</span>
-      <ul>
-        <li>Balanced Class Skeletons V (Nightmare)</li>
-        <li>Fixed critical bug in Carlos el Esclavo</li>
-        <li>Optimized Death Train system</li>
-        <li>Performance improvements in transformed End dimension</li>
+    <div class="bg-[#063d30cc] rounded-xl px-4 py-3 text-[#a2ffcb] text-[1.05rem] font-medium">
+      <span class="text-brand-cyan font-bold block mb-1.5">What's new:</span>
+      <ul class="mt-1 pl-5 mb-0">
+        <li class="mb-0.5 leading-[1.7] text-[0.99rem]">Balanced Class Skeletons V (Nightmare)</li>
+        <li class="mb-0.5 leading-[1.7] text-[0.99rem]">Fixed critical bug in Carlos el Esclavo</li>
+        <li class="mb-0.5 leading-[1.7] text-[0.99rem]">Optimized Death Train system</li>
+        <li class="mb-0.5 leading-[1.7] text-[0.99rem]">Performance improvements in transformed End dimension</li>
       </ul>
     </div>
   </div>
 
-  <div class="updates-config-card">
-    <span class="updates-config-title">Update Settings</span>
-    <div class="updates-config-row">
+  <!-- Config card -->
+  <div class="bg-[rgba(18,21,32,0.92)] border-2 border-[#272b38] rounded-2xl text-white px-8 py-6 flex flex-col gap-3 mb-1">
+    <span class="text-[1.1rem] font-bold text-[#a2bcff] mb-3 block">Update Settings</span>
+
+    <div class="flex items-center justify-between gap-4 mb-1">
       <div>
-        <span class="updates-config-label">Automatic updates</span>
-        <span class="updates-config-desc">Download and install updates automatically</span>
+        <span class="text-[1.07rem] font-semibold text-white block">Automatic updates</span>
+        <span class="text-[#bcbcc7] text-[0.97rem] block mt-0.5">Download and install updates automatically</span>
       </div>
-      <button class="updates-btn"
-              [ngClass]="tauri.options.auto_update ? 'updates-btn--green' : 'updates-btn--white'"
+      <button class="inline-flex items-center gap-2 font-bold rounded-xl border-none cursor-pointer px-5 py-2.5 transition-colors shadow-md min-w-[110px] text-[1.05rem]"
+              [ngClass]="tauri.options.auto_update
+                ? 'bg-brand-cyan text-white border border-brand-cyan hover:bg-[#169a7c]'
+                : 'bg-white text-[#222] border border-[#e0e0e0] hover:bg-[#eee]'"
               type="button" (click)="toggleUpdate()">
         {{ tauri.options.auto_update ? 'Enabled' : 'Disabled' }}
       </button>
     </div>
-    <div class="updates-config-row">
+
+    <div class="flex items-center justify-between gap-4 mb-1">
       <div>
-        <span class="updates-config-label">Notifications</span>
-        <span class="updates-config-desc">Show notifications for new versions</span>
+        <span class="text-[1.07rem] font-semibold text-white block">Notifications</span>
+        <span class="text-[#bcbcc7] text-[0.97rem] block mt-0.5">Show notifications for new versions</span>
       </div>
-      <button class="updates-btn"
-              [ngClass]="tauri.options.notification_enabled ? 'updates-btn--green' : 'updates-btn--white'"
+      <button class="inline-flex items-center gap-2 font-bold rounded-xl border-none cursor-pointer px-5 py-2.5 transition-colors shadow-md min-w-[110px] text-[1.05rem]"
+              [ngClass]="tauri.options.notification_enabled
+                ? 'bg-brand-cyan text-white border border-brand-cyan hover:bg-[#169a7c]'
+                : 'bg-white text-[#222] border border-[#e0e0e0] hover:bg-[#eee]'"
               type="button" (click)="toggleNotifications()">
         {{ tauri.options.notification_enabled ? 'Enabled' : 'Disabled' }}
       </button>
     </div>
-    <div class="updates-config-warning">
-      <span class="updates-config-warning-title">Important!</span>
-      <span class="updates-config-warning-desc">
+
+    <div class="bg-[#2c1016e0] rounded-xl border border-brand-red px-4 py-3 text-brand-red text-[1.13rem] font-semibold flex flex-col gap-1 mt-3.5 mb-0.5">
+      <span class="font-bold text-[1.09rem] text-brand-red mb-0.5">Important!</span>
+      <span class="font-semibold text-brand-red">
         Always update before joining the server. Incompatible versions will prevent you from connecting.
       </span>
     </div>
   </div>
+
 </div>
