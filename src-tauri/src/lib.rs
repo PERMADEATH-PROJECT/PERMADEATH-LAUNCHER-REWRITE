@@ -36,8 +36,12 @@ pub async fn run() {
     }
 
     // --- DATABASE CONNECTION ---
+    // Runtime override first (lets dev/CI set DATABASE_URL via env or a local .env).
+    // Otherwise fall back to the value embedded at compile time from src-tauri/.env,
+    // so the distributed binary works without shipping a .env alongside it.
     dotenvy::dotenv().ok();
-    let db_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be defined .env");
+    let db_url = std::env::var("DATABASE_URL")
+        .unwrap_or_else(|_| dotenvy_macro::dotenv!("DATABASE_URL").to_string());
 
     let db_manager = match DbManager::new(&db_url).await {
         Ok(manager) => manager,

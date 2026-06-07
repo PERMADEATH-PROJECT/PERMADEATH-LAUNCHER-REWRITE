@@ -184,6 +184,10 @@ impl GameManager {
         let mut args: Vec<String> = vec![
             "-jar".to_string(),
             jar_path.to_string_lossy().to_string(),
+            "--game-version".to_string(),
+            "1.21.5".to_string(),
+            "--fabric-version".to_string(),
+            "0.16.13".to_string(),
             "--launcher-dir".to_string(),
             game_dir,
             "--max-ram".to_string(),
